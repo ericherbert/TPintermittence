@@ -63,7 +63,7 @@ hours = yyyymmddhhmm_hours( Horaire[1:-1,0], Horaire[1:-1,1] )
 
 data, hours = nettoyage_donnéees( hours, data)
 
-if ~os.path.isdir(trait_dir):
+if not os.path.isdir(trait_dir):
     os.makedirs(trait_dir)
 
 np.savetxt( trait_dir + filename[:-3] + 'data' , data)

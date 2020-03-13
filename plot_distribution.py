@@ -2,20 +2,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 import scipy.stats
 
-hours = np.loadtxt('hours')
-data = np.loadtxt('data')
 
+trait_dir = "./TRAITEMENTS/" # repertoire
+filename = "eCO2mix_RTE_Annuel-Definitif_2018"
+
+hours = np.loadtxt(trait_dir + filename + '.hours')
+data = np.loadtxt(trait_dir + filename + '.data')
 
 periode = hours
-queldata = data[4,:]
-queldata = np.diff(queldata)
-
+queldata = data[ 1, :]
+queldata = np.diff( queldata / np.mean(queldata))
 
 # exemple de figure obtenue avec les données
-figname = "wind"
+figname = " temp "
 plt.close(figname)
 plt.figure(figname)
-plt.hist( queldata / np.mean(queldata) , bins=100, log=1 )
+# bins = seuillage
+# log = axes logarithmiques
+# density = normalisation pdf telle que int (distribution) = 1
+plt.hist( queldata , bins=100, log=1, density=1 )
 #plt.xlabel('Temps [unités ?]')
 #plt.ylabel('Puissance [unités ?]')
 
@@ -30,7 +35,7 @@ y = scipy.stats.norm.pdf( x, mean, std)
 #plt.plot( x, y, color='coral')
 
 yy = 1/(std * np.sqrt(2 * np.pi)) *np.exp( - (x - mean)**2 / (2 * std**2) )
-plt.plot(x, yy / np.max(yy) * 4000, linewidth=2, color='r')
+plt.plot(x, yy / np.max(yy) , linewidth=2, color='r')
 
 
 plt.show(block=False)
