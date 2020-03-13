@@ -4,14 +4,19 @@ import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
 
 
-WD = "./"
-filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
+data_dir = "./DATA/"
+trait_dir = "./TRAITEMENTS/"
+#filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
+#filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
+filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018.csv"
 
-data = np.genfromtxt( WD + filename, delimiter=',', deletechars='�', names=True )
+
+data = np.genfromtxt( data_dir + filename, delimiter=',', deletechars='�', names=True )
 #data = data[0::2,:]
-Horaire = np.loadtxt( WD + filename, dtype=str, usecols=(2,3), delimiter=',' )
+Horaire = np.loadtxt( data_dir + filename, dtype=str, usecols=(2,3), delimiter=',' )
 
 print('')
+
 print('2 fichiers sont sauvegardés:')
 print('-- le temps dans *hours*')
 
@@ -59,8 +64,8 @@ data, hours = nettoyage_donnéees( hours, data)
 
 
 
-np.savetxt('data',data)
-np.savetxt('hours',hours)
+np.savetxt( trait_dir + filename[:-3] + 'data' , data)
+np.savetxt( trait_dir + filename[:-3] + 'hours' , hours)
 
 
 
