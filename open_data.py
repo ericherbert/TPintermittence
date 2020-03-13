@@ -2,10 +2,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
+import os
 
 
-data_dir = "./DATA/"
-trait_dir = "./TRAITEMENTS/"
+data_dir = "./DATA/" # repertoire des donnees
+trait_dir = "./TRAITEMENTS/" # repertoire des sorties
+
 #filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
 #filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
 filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018.csv"
@@ -57,16 +59,15 @@ def nettoyage_donnéees(hours,data):
 
 
 
-
 hours = yyyymmddhhmm_hours( Horaire[1:-1,0], Horaire[1:-1,1] )
 
 data, hours = nettoyage_donnéees( hours, data)
 
-
+if ~os.path.isdir(trait_dir):
+    os.makedirs(trait_dir)
 
 np.savetxt( trait_dir + filename[:-3] + 'data' , data)
 np.savetxt( trait_dir + filename[:-3] + 'hours' , hours)
-
 
 
 
