@@ -10,8 +10,20 @@ hours = np.loadtxt(trait_dir + filename + '.hours')
 data = np.loadtxt(trait_dir + filename + '.data')
 
 periode = hours
-queldata = data[ 1, :]
-queldata = np.diff( queldata / np.mean(queldata))
+# choisir la source  à représenter
+source = 1
+queldata = data[ source, :]
+
+# choisir l'intervalxle temporel de variation même moyenne et
+# écart type que la distribution considérée
+draw_normal = True
+
+# incrément de temps pour de la variation 
+dt = 48
+queldata = ( queldata[dt::] - queldata[0:-dt:] ) / np.mean(queldata)
+
+
+
 
 # exemple de figure obtenue avec les données
 figname = " temp "
@@ -24,18 +36,20 @@ plt.hist( queldata , bins=100, log=1, density=1 )
 #plt.xlabel('Temps [unités ?]')
 #plt.ylabel('Puissance [unités ?]')
 
-x_min = np.min(queldata)
-x_max = np.max(queldata)
 
-mean = np.mean(queldata)
-std = np.std(queldata)
+if draw_normal:
+    x_min = np.min(queldata)
+    x_max = np.max(queldata)
 
-x = np.linspace(x_min, x_max, 100)
-y = scipy.stats.norm.pdf( x, mean, std)
-#plt.plot( x, y, color='coral')
+    mean = np.mean(queldata)
+    std = np.std(queldata)
 
-yy = 1/(std * np.sqrt(2 * np.pi)) *np.exp( - (x - mean)**2 / (2 * std**2) )
-plt.plot(x, yy / np.max(yy) , linewidth=2, color='r')
+    x = np.linspace(x_min, x_max, 100)
+    y = scipy.stats.norm.pdf( x, mean, std)
+    #plt.plot( x, y, color='coral')
+
+    yy = 1/(std * np.sqrt(2 * np.pi)) *np.exp( - (x - mean)**2 / (2 * std**2) )
+    plt.plot(x, yy , linewidth=2, color='r')
 
 
 plt.show(block=False)
