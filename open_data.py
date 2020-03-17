@@ -9,9 +9,8 @@ data_dir = "./DATA/" # repertoire des donnees
 trait_dir = "./TRAITEMENTS/" # repertoire des sorties
 
 #filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
-#filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
-filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018.csv"
-
+filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
+#filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018.csv"
 
 data = np.genfromtxt( data_dir + filename, delimiter=',', deletechars='�', names=True )
 #data = data[0::2,:]
@@ -44,10 +43,10 @@ def yyyymmddhhmm_hours( yyyymmdd, hhmm):
 def nettoyage_donnéees(hours,data):
     print('-- les données sont dans *data* qui contient:')
     ref = ~np.isnan(data['Consommation'])
-    data2 = np.zeros(( len(data.dtype.names)+1, np.sum(ref) ))
     hours = hours[ref[:-1]]
     inc = 0
-    do = ['Consommation','Fioul','Charbon','Nuclaire','Eolien','Solaire','Hydraulique']
+    do = ['Consommation','Nuclaire','Eolien','Solaire','Hydraulique']
+    data2 = np.zeros(( len(do), np.sum(ref) ))
     for key in data.dtype.names:
         if key in do:
             print('colonne ' + str(inc) +  ' == ' + key)

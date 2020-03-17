@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 
 trait_dir = "./TRAITEMENTS/" # repertoire
-filename = "eCO2mix_RTE_Annuel-Definitif_2018"
+filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018"
 
 
 hours = np.loadtxt(trait_dir + filename + '.hours')
