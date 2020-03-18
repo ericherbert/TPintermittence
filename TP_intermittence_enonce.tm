@@ -5,36 +5,44 @@
 <\body>
   <doc-data|<doc-title|TP intermittence>>
 
+  Le compte rendu de ce TP devra être rendu sous forme numérique, en pdf, à
+  l'aide d'un outil tel qu'un latex ou LibreOffice. Les figures seront
+  commentées et choisies selon leur pertinence.
+
   <section|Avant de commencer>
 
   <\itemize>
-    <item>La production de PV et eolien en France doit légalement être
-    achetée par EDF, donc la puissance de ces sources injectées dans le
-    réseau est toujours la maximale possible.
+    <item>On s'intéresse à la production de puissance électrique en France.
+    Légalement EDF doit acheter toutes la production PV et eolien, donc la
+    puissance de ces sources injectées dans le réseau est toujours la
+    maximale possible. Inversement, les source fossiles étant pilotables,
+    elles s'adaptent à la variation de la consommation.
 
-    <item>L'intermittence n'est pas
+    <item>L'intermittence n'est pas réductible à la\ 
 
     <\itemize>
-      <item>Variabilité
+      <item>Variabilité, pilotable ou non, prévisible ou non de la production
+      de puissance
 
-      <item>Prévisibilité
+      <item>Prévisibilité,\ 
 
-      <item>Fractionnabilité
+      <item>Fractionnabilité, c'est à dire la possibilité de n'utiliser une
+      partie de sa\ 
     </itemize>
-
-    \;
   </itemize>
+
+  L'intermittence ne se défini pas simplement.
 
   <section|Récupérer les données et les programmes>
 
   <subsection|Programmes>
 
-  rendez vous sur la page <with|font-shape|italic|https://github.com/ericherbert/TPintermittence>,
+  rendez vous sur la page <hlink|https://www.rte-france.com/fr/eco2mix/eco2mix-mix-energetique|>,
   téléchargez l'ensemble du projet (bouton <with|font-shape|italic|clone or
   download>) et extraire les documents de l'archive. Vous y trouverez
 
   <\itemize>
-    <item>Le dossier <with|font-shape|italic|data> contenant les données dont
+    <item>Le dossier <with|font-shape|italic|DATA> contenant les données dont
     vous avez besoin si la phase de téléchargement des données sur le site de
     <with|font-shape|italic|RTE> n'a pas fonctionné
 
@@ -44,15 +52,15 @@
     réalisation de ce TP.
   </itemize>
 
-  Après avoir ouvert un terminal, lancer la commande
-  <with|font-shape|italic|ipython> dans le répertoire où se trouve vos
-  fichiers.
+  Ce TP doit normalement être effectué sur l'application
+  <with|font-shape|italic|JupyterHub> de l'UFR. Vous le trouverez à l'adresse
+  suivante <hlink|https://jupy.physique.univ-paris-diderot.fr/|https://jupy.physique.univ-paris-diderot.fr/>.\ 
 
   <subsection|Données>
 
   <\enumerate>
     <item>Se rendre sur le site de RTE à l'adresse
-    <with|font-shape|italic|https://www.rte-france.com/fr/eco2mix/eco2mix-mix-energetique>
+    <hlink|https://www.rte-france.com/fr/eco2mix/eco2mix-mix-energetique|>
 
     <item>Identifier les différentes sources de puissance, comparer
     qualitativement sur différentes periodes leur série temporelle.
@@ -61,23 +69,30 @@
     correspondantes. Noter la durée, la fréquence d'échantillonnage, les
     sources disponibles.
 
-    <item>Après avec dézipper l'archive, utiliser le programme python
-    <with|font-shape|italic|open_data.py> que vous aurez modifié pour votre
-    usage, pour extraire les différentes données. Noter le nom et la colonne
-    de chaque mesurable (Consommation, Fioul, Charbon etc).
+    <item>Après avec dézippé l'archive et enregistré le tableau au format
+    csv, utiliser le programme <with|font-shape|italic|open_data.py> que vous
+    aurez modifié pour votre usage, pour extraire les différentes données.
+    Noter le nom et la colonne de chaque mesurable (Consommation, nucléaire
+    etc). Si besoin dans le repertoire <with|font-shape|italic|DATA>, des
+    données provenant de RTE sont disponibles.
   </enumerate>
 
   <section|Traitement>
 
-  <subsubsection|Séries temporelles>
+  Dans la suite on s'interesera uniquement aux sources de production
+  nucléaire, éolien et solaire. L'expression <with|font-shape|italic|les 3
+  sources> s'y réfère\ 
+
+  <subsection|Séries temporelles>
 
   <\enumerate>
-    <item>Représenter la dynamique temporelle de la consommation journalière,
-    mensuelle et annuelle. Ajoutez les unités et enregistrez ces figures de
-    manière à pouvoir les retrouver simplement, et faites de même pour les
-    trois sources les dynamiques temporelles journalière, mensuelle et
-    annuelle. Ajoutez les unités et enregistrez ces figures de manière à
-    pouvoir les retrouver simplement.
+    <item>À l'aide du programme <with|font-shape|italic|plot_data.py>,
+    représenter la dynamique temporelle de la
+    <with|font-series|bold|consommation> journalière, mensuelle et annuelle.
+    Ajoutez les unités et enregistrez ces figures de manière à pouvoir les
+    retrouver simplement, et faites de même pour les trois sources. Ajoutez
+    les unités et enregistrez ces figures de manière à pouvoir les retrouver
+    simplement.
 
     <\enumerate>
       <item>Sur les diagrammes annuels, repérez les différentes saisons
@@ -94,11 +109,13 @@
     caractériser chacune des sources ?
   </enumerate>
 
-  <subsubsection|distribution des séries temporelles>
+  <subsection|Distribution des séries temporelles>
 
   <\enumerate>
-    <item>Représenter la variation de la distribution de la consommation
-    normalisée par sa moyenne temporelle <math|<frac|C<around*|(|t|)>-C<around*|(|t+\<tau\>|)>|<around*|\<langle\>|C|\<rangle\>>>>,
+    <item>À l'aide du programme <with|font-shape|italic|plot_distribution.py>,
+    représenter la variation de la distribution de la
+    <with|font-series|bold|consommation> normalisée par sa moyenne temporelle
+    <math|<frac|C<around*|(|t|)>-C<around*|(|t+\<tau\>|)>|<around*|\<langle\>|C|\<rangle\>>>>,
     avec un pas de temps <math|\<tau\>> d'une heure puis de 24 heures. Faire
     de même pour les 3 sources. Représenter les
     <with|font-shape|italic|densités de probabilité> (pdf) de ces fonctions
@@ -109,73 +126,28 @@
     représentation (logarithmique ou linéaire) qui vous paraitra la plus
     pertinente.\ 
 
-    <item>Discussion de la comparaison avec une loi normale.
-
-    <\enumerate>
-      <item>
-
-      <\itemize>
-        <item>1h On remarque pour toutes les sources un pic pour les
-        variations très faibles, suivi de branches exponentielles plus
-        petites puis plus élvées que la gaussienne.\ 
-
-        <item>24h\ 
-      </itemize>
-
-      <item>Consommation\ 
-
-      <\itemize>
-        <item>à 1h = globalement asymetrique, mais gaussien sur la fraction
-        visible
-
-        <item>à 24h = <math|\<sim\>>gaussien
-      </itemize>
-
-      <item>nucléaire
-
-      <\itemize>
-        <item>à 1h\ 
-
-        <item>à 24h
-      </itemize>
-
-      <item>éolien
-
-      <\itemize>
-        <item>à 1h\ 
-
-        <item>à 24h\ 
-      </itemize>
-
-      <item>PV
-
-      <\itemize>
-        <item>à 1h\ 
-
-        <item>à 24h
-      </itemize>
-    </enumerate>
+    <item>Discuter à 1h et 24h les écarts à la loi normale.
   </enumerate>
 
-  <section|Aggrégation>
+  <section|Agrégation>
 
-  L'aggrégation consiste à séparer les sources de puissances de même nature
-  pour profiter de conditions climatiques le plus décorréle possible.
+  L'agrégation consiste à séparer les sources de puissances de même nature
+  pour profiter de conditions climatiques le plus décorrélées possible.
 
   <\enumerate>
-    <item>À partir du programme <with|font-shape|italic|aggregation.py> qui
+    <item>À partir du programme <with|font-shape|italic|agregation.py> qui
     utilise des données issues de <with|font-shape|italic|RTE> décrivant la
-    production électrique en région Nord et Sud, représenter puis aditionner
+    production électrique issues de deux régions, représenter puis aditionner
     les sources électriques PV ou éolien.
 
-    <item>
+    <item>Commenter la correlation des productions éléctriques dans ce cas
   </enumerate>
 
   <section|Foisonnement>
 
   Le foisonnement consiste à multiplier les sources de production de
   puissance à priori décoreler pour tendre vers une distribution. en vous
-  appuyant sur le programme <with|font-shape|italic|plot_foisonnement.py>
+  appuyant sur le programme <with|font-shape|italic|foisonnement.py>
   aditionner les sources éolien et PV et retpésenter la série temporelle
   correspondante.
 
@@ -186,19 +158,26 @@
 
     <item>Refaire les <with|font-shape|italic|pdf> des séries temporelles.\ 
 
-    <item>Que peut on observer ?\ 
+    <item>Que peut on observer ? La perte de puissance nocturne est elle
+    atténuée ?
 
-    <\enumerate>
-      <item>La perte de puissance nocturne est elle atténuée ?
-    </enumerate>
-
-    <item>Conclure sur l'effet du foisonnement.
+    <item>Commenter la correlation des productions éléctriques dans ce cas
   </enumerate>
 
-  <section|Stockage>
+  <section|Intermittence>
 
-  Estimer le dimensionnement du stockage nécessaire pour vous assure de
-  l'approvisionnement en électricité.
+  Dans une première approche de l'intermittence, nous pouvons l'évaluer comme
+  la capacité à s'adapter à la variation de la consommation. Pour cela en
+  vous appuyant sur le programme <with|font-shape|italic|correlation_simple.py>,
+  vous allez calculer la probabilité que le signe de la variation de la
+  consommation, déterminée par le signe de
+  <math|<around*|(|<frac|C<around*|(|t|)>-C<around*|(|t+\<tau\>|)>|<around*|\<langle\>|C|\<rangle\>>>|)>>
+  et celui des sources respectivement nucléaire, éolien et solaire soient les
+  mêmes.\ 
+
+  Commentez les valeurs obtenues, en faisant également varier <math|\<tau\>>
+
+  \;
 </body>
 
 <initial|<\collection>
@@ -208,13 +187,12 @@
   <\collection>
     <associate|auto-1|<tuple|1|1>>
     <associate|auto-10|<tuple|6|?>>
-    <associate|auto-11|<tuple|7|?>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|2.1|1>>
     <associate|auto-4|<tuple|2.2|1>>
     <associate|auto-5|<tuple|3|1>>
-    <associate|auto-6|<tuple|3.0.1|1>>
-    <associate|auto-7|<tuple|3.0.2|?>>
+    <associate|auto-6|<tuple|3.1|1>>
+    <associate|auto-7|<tuple|3.2|?>>
     <associate|auto-8|<tuple|4|?>>
     <associate|auto-9|<tuple|5|?>>
   </collection>
@@ -235,31 +213,31 @@
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-3>>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Données>
+      <with|par-left|<quote|1tab>|2.2<space|2spc>Données
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
-      <no-break><pageref|auto-4><vspace|0.5fn>
+      <no-break><pageref|auto-4>>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Questions>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|3<space|2spc>Traitement>
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-5><vspace|0.5fn>
 
-      <with|par-left|<quote|2tab>|4.0.1<space|2spc>séries temporelles
+      <with|par-left|<quote|1tab>|3.1<space|2spc>Séries temporelles
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-6>>
 
-      <with|par-left|<quote|2tab>|4.0.2<space|2spc>distribution des séries
+      <with|par-left|<quote|1tab>|3.2<space|2spc>Distribution des séries
       temporelles <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-7>>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>Aggrégation
-      ?> <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|4<space|2spc>Agrégation>
+      <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-8><vspace|0.5fn>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|6<space|2spc>foisonnement>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|5<space|2spc>Foisonnement>
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-9><vspace|0.5fn>
 
-      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|7<space|2spc>stockage>
+      <vspace*|1fn><with|font-series|<quote|bold>|math-font-series|<quote|bold>|6<space|2spc>Intermittence>
       <datoms|<macro|x|<repeat|<arg|x>|<with|font-series|medium|<with|font-size|1|<space|0.2fn>.<space|0.2fn>>>>>|<htab|5mm>>
       <no-break><pageref|auto-10><vspace|0.5fn>
     </associate>

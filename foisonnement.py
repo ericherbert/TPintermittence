@@ -50,6 +50,16 @@ def relative_variation(queldata):
 
     return queldata
 
+def correlation( a, v):
+
+    figname = " foisonnement_correlation "
+    plt.close(figname)
+    plt.figure(figname)
+    plt.plot( np.correlate( a, v, "same")  )
+
+    plt.xlabel('Abs [unités ?]')
+    plt.ylabel('Ord [unités ?]')
+
 
 # exemple de figures obtenue avec les données
 figname = " foisonnement_temp "
@@ -72,7 +82,7 @@ plt.hist( relative_variation( Wind + PV ), bins=100, log=1, density=1, color='b'
 plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
 
-
+correlation( Wind, PV)
 
 plt.show(block=False)
 

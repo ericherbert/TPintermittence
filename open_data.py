@@ -8,8 +8,8 @@ import os
 data_dir = "./DATA/" # repertoire des donnees
 trait_dir = "./TRAITEMENTS/" # repertoire des sorties
 
-#filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
-filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
+filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
+#filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
 #filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018.csv"
 
 data = np.genfromtxt( data_dir + filename, delimiter=',', deletechars='�', names=True )

@@ -1,12 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
-#import scipy.stats
 
-#hours = np.loadtxt('hours')
-#data = np.loadtxt('data')
 
-trait_dir = "./TRAITEMENTS/" # repertoire
+trait_dir = "./TRAITEMENTS/" # repertoire de traitement
 filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018"
+
 
 hours = np.loadtxt(trait_dir + filename + '.hours')
 data = np.loadtxt(trait_dir + filename + '.data')

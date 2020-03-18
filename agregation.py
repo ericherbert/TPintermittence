@@ -1,7 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-trait_dir = "./TRAITEMENTS/" # repertoire
+
+trait_dir = "./TRAITEMENTS/" # repertoire traitement
+
+# premiere série de données à utiliser
+
 filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018"
 
 hours_1 = np.loadtxt(trait_dir + filename + '.hours')
@@ -20,17 +24,11 @@ source = 2
 source_1 = data_1[ source,:]
 source_2 = data_2[ source,:]
 
+# affiche une Gaussienne en surimpression 
 plot_gaussienne = True
 
 
-def plot_temporelle( queldata, hours):
-    # exemple de figure obtenue avec les données
-    figname = " série temporelle "
-    plt.close(figname)
-    plt.figure(figname)
-    plt.plot( hours, queldata )
-
-def relative_variation(queldata):
+def relative_variation( queldata):
     # Quel décalage temporel utiliser ?
     # attention à vérifer l'incrément de temps sur le fichier horaire !
     dt = 2
@@ -53,12 +51,23 @@ def relative_variation(queldata):
     print('ecart type')
     print( std )
     print('')
-
     return queldata
+
+def correlation( a, v):
+
+    figname = " agregation_correlation "
+    plt.close(figname)
+    plt.figure(figname)
+    plt.plot( np.correlate( a, v, "same")  )
+
+    plt.xlabel('Abs [unités ?]')
+    plt.ylabel('Ord [unités ?]')
+
+
 
 
 # exemple de figures obtenue avec les données
-figname = " agregation_temp "
+figname = " agregation_serie-temporelle "
 plt.close(figname)
 plt.figure(figname)
 plt.plot( periode,  source_1 , 'r')
@@ -68,7 +77,7 @@ plt.plot( periode, source_1 + source_2, 'b' )
 plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
 
-figname = " agregationt_dist "
+figname = " agregation_distribution "
 plt.close(figname)
 plt.figure(figname)
 plt.hist( relative_variation( source_1 )   , bins=100, log=1, density=1, color='r' )
@@ -77,6 +86,9 @@ plt.hist( relative_variation(  source_1 + source_2 ), bins=100, log=1, density=1
 
 plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
+
+
+correlation( source_1, source_2)
 
 
 
