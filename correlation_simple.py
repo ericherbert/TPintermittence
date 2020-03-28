@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -26,16 +27,21 @@ def relative_variation( queldata):
 def correlation_simple( a, b):
     # fonction qui compare le signe de 2 vecteurs et associe un 1 s'il sont identiques, 0 autrement
     c = np.sign(a) == np.sign(b)
-    print(" Correlation simple : ")
-    print( np.sum(c) )
+    print(" Nombre d'occurence où le signe de la dérivée de la consommation et celui de la production sont identiques : ")
+    print( np.size(c) )
     return c
 
 
+print('== \t nucléaire')
 correlation_simple( relative_variation( Consommation ) , relative_variation( nucleaire ))
+
+print('== \t Éolien')
 correlation_simple( relative_variation( Consommation ) , relative_variation( Wind ))
+
+print('== \t nucléaire')
 correlation_simple( relative_variation( Consommation ) , relative_variation( PV ))
 
-figname = " temp "
+figname = " Séries temporelle normalisées"
 plt.close(figname)
 plt.figure(figname)
 plt.plot( Consommation / np.mean(Consommation))

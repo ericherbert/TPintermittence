@@ -82,7 +82,7 @@ plt.hist( relative_variation( Wind + PV ), bins=100, log=1, density=1, color='b'
 plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
 
-correlation( Wind, PV)
+# correlation( Wind, PV)
 
 plt.show(block=False)
 

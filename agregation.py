@@ -7,11 +7,15 @@ trait_dir = "./TRAITEMENTS/" # repertoire traitement
 # premiere série de données à utiliser
 
 filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018"
+print('')
+print(' fichier utilisé 1 : ' + filename)
 
 hours_1 = np.loadtxt(trait_dir + filename + '.hours')
 data_1 = np.loadtxt(trait_dir + filename + '.data')
 
+# seconde  série de données à utiliser
 filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018"
+print(' fichier utilisé  2 : ' + filename)
 
 hours_2 = np.loadtxt(trait_dir + filename + '.hours')
 data_2 = np.loadtxt(trait_dir + filename + '.data')
@@ -19,13 +23,15 @@ data_2 = np.loadtxt(trait_dir + filename + '.data')
 periode = hours_1
 
 # source à utiliser
-source = 2 
+source = 2
+print(' source utilisée : ' + str(source) + '\n')
 
 source_1 = data_1[ source,:]
 source_2 = data_2[ source,:]
 
 # affiche une Gaussienne en surimpression 
 plot_gaussienne = True
+
 
 
 def relative_variation( queldata):
@@ -88,7 +94,7 @@ plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
 
 
-correlation( source_1, source_2)
+#correlation( source_1, source_2)
 
 
 

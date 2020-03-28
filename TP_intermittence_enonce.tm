@@ -5,39 +5,45 @@
 <\body>
   <doc-data|<doc-title|TP intermittence>>
 
-  Le compte rendu de ce TP devra être rendu sous forme numérique, en pdf, à
-  l'aide d'un outil tel qu'un latex ou LibreOffice. Les figures seront
+  Le compte rendu de ce TP devra être rendu sous forme numérique, en pdf,
+  édité à l'aide d'un outil tel que latex ou LibreOffice. Les figures seront
   commentées et choisies selon leur pertinence.
 
   <section|Avant de commencer>
 
+  L'intermittence est une notion très précise en physique, qui signifie que
+  l'on observe pour une variable aléatoire des fluctuations de grande
+  amplitude qui s'écartent de la loi normale. Cependant dans le débat
+  publique lié à la production de puissance, et notamment dans la comparaison
+  entre les énergie de flux (éolien solaire) et les énergies de stock
+  (nucléaire, fossile) dans leur capacité à répondre à une demande de
+  puissance électrique, cette définition n'est pas suffisante. En effet, par
+  exemple, une variation parfaitement prévisible est que le PV ne produira
+  jamais de puissance la nuit, et ne pourra donc jamais satisfaire une
+  demande quel que soit la taille du parc installé. Ainsi, il est nécessaire
+  de tenir compte des caractéristiques intrinsèques de la production et de la
+  consommation et de leur couplage, et d'identifier les notions suivantes:
+
   <\itemize>
-    <item>On s'intéresse à la production de puissance électrique en France.
-    Légalement EDF doit acheter toutes la production PV et eolien, donc la
-    puissance de ces sources injectées dans le réseau est toujours la
-    maximale possible. Inversement, les source fossiles étant pilotables,
-    elles s'adaptent à la variation de la consommation.
+    <item>Variabilité, pilotable et/ou prévisible (arret pour entretien) ou
+    non (arret pour accident)
 
-    <item>L'intermittence n'est pas réductible à la\ 
+    <item>Prévisibilité de la production (la nuit, pas de production PV)
 
-    <\itemize>
-      <item>Variabilité, pilotable ou non, prévisible ou non de la production
-      de puissance
-
-      <item>Prévisibilité,\ 
-
-      <item>Fractionnabilité, c'est à dire la possibilité de n'utiliser une
-      partie de sa\ 
-    </itemize>
+    <item>Fractionnabilité, c'est à dire la possibilité de n'utiliser qu'une
+    partie de la production\ 
   </itemize>
 
-  L'intermittence ne se défini pas simplement.
+  Ces paramètres mènent à une grande confusion. Nous allons essayer dans ce
+  TP de percevoir les caractéristiques des différentes sources de production
+  de puissance électrique et d'en extraire une estimation simple de
+  l'intermittence.
 
   <section|Récupérer les données et les programmes>
 
   <subsection|Programmes>
 
-  rendez vous sur la page <hlink|https://www.rte-france.com/fr/eco2mix/eco2mix-mix-energetique|>,
+  Rendez vous sur la page <hlink|https://www.rte-france.com/fr/eco2mix/eco2mix-mix-energetique|>,
   téléchargez l'ensemble du projet (bouton <with|font-shape|italic|clone or
   download>) et extraire les documents de l'archive. Vous y trouverez
 
@@ -54,7 +60,15 @@
 
   Ce TP doit normalement être effectué sur l'application
   <with|font-shape|italic|JupyterHub> de l'UFR. Vous le trouverez à l'adresse
-  suivante <hlink|https://jupy.physique.univ-paris-diderot.fr/|https://jupy.physique.univ-paris-diderot.fr/>.\ 
+  suivante <hlink|https://jupy.physique.univ-paris-diderot.fr/|https://jupy.physique.univ-paris-diderot.fr/>.
+  Vous devez normalement pouvoir vous y connecter avec vos identifiants ENT.
+  En cas de problème, m'écrire.
+
+  Remarque sur les données de RTE: Légalement EDF doit acheter toutes la
+  production PV et eolien, donc la puissance de ces sources injectées dans le
+  réseau est toujours la maximale possible. Inversement, les source fossiles,
+  nucléaire et hydraulique étant pilotables, elles s'adaptent à la variation
+  de la consommation.
 
   <subsection|Données>
 
@@ -67,19 +81,21 @@
 
     <item>Choisir une periode spécifique et télécharger les données
     correspondantes. Noter la durée, la fréquence d'échantillonnage, les
-    sources disponibles.
+    sources disponibles. Après avec dézippé l'archive et enregistré le
+    tableau au format csv, Prendre garde également aux caractères non
+    reconnus.
 
-    <item>Après avec dézippé l'archive et enregistré le tableau au format
-    csv, utiliser le programme <with|font-shape|italic|open_data.py> que vous
-    aurez modifié pour votre usage, pour extraire les différentes données.
-    Noter le nom et la colonne de chaque mesurable (Consommation, nucléaire
-    etc). Si besoin dans le repertoire <with|font-shape|italic|DATA>, des
-    données provenant de RTE sont disponibles.
+    <item>Utiliser le programme <with|font-shape|italic|open_data.py> que
+    vous aurez modifié pour votre usage, pour extraire les différentes
+    données. Noter le nom et la colonne de chaque mesurable (Consommation,
+    nucléaire etc). Si besoin dans le repertoire
+    <with|font-shape|italic|DATA>, des données provenant de RTE sont
+    disponibles.
   </enumerate>
 
   <section|Traitement>
 
-  Dans la suite on s'interesera uniquement aux sources de production
+  Dans la suite on s'interessera uniquement aux sources de production
   nucléaire, éolien et solaire. L'expression <with|font-shape|italic|les 3
   sources> s'y réfère\ 
 
@@ -104,7 +120,7 @@
     <item>Extraire les moyennes temporelles
     <math|<around*|\<langle\>|x|\<rangle\>>> et écart type
     <math|\<sigma\><rsub|x>> de chacune des sources sur chacune des periodes
-    considérées. Pouvez vous utiliser les quantités
+    considérées. Quelles sont les limitations de l'emploi des quantités
     <math|\<sigma\><rsub|x>/<around*|\<langle\>|x|\<rangle\>>>, pour
     caractériser chacune des sources ?
   </enumerate>
@@ -126,7 +142,10 @@
     représentation (logarithmique ou linéaire) qui vous paraitra la plus
     pertinente.\ 
 
-    <item>Discuter à 1h et 24h les écarts à la loi normale.
+    <item>Après avoir justifié qu'une distribution normale représente des
+    fluctuations aléatoire, discuter avec <math|\<tau\>=1 h> et 24h les
+    écarts de la pdf de la production électrique à cette loi pour les 3
+    sources.
   </enumerate>
 
   <section|Agrégation>
@@ -140,42 +159,59 @@
     production électrique issues de deux régions, représenter puis aditionner
     les sources électriques PV ou éolien.
 
-    <item>Commenter la correlation des productions éléctriques dans ce cas
+    <item>Commenter
+
+    <\enumerate>
+      <item>Les séries temporelles obtenues. L'agrégation permet elle de
+      diminuer les periodes sans puissance produite ?
+
+      <item>Comparer les distributions obtenues avec une loi normale
+    </enumerate>
   </enumerate>
 
   <section|Foisonnement>
 
   Le foisonnement consiste à multiplier les sources de production de
-  puissance à priori décoreler pour tendre vers une distribution. en vous
-  appuyant sur le programme <with|font-shape|italic|foisonnement.py>
-  aditionner les sources éolien et PV et retpésenter la série temporelle
-  correspondante.
+  puissance à priori décorrélées \ pour tendre vers une distribution. Il
+  s'agit de s 'appuyer sur une conséquence du théorème central limite qui
+  prédit un comportemnet aléatoire d'une somme de variables elle même
+  aléatoires. La condition étant que les varaibles soient absolument
+  décorrélées. En vous appuyant sur le programme
+  <with|font-shape|italic|foisonnement.py> aditionner les sources éolien et
+  PV et retpésenter la série temporelle correspondante.
 
   <\enumerate>
     <item>À partir du programme <with|font-shape|italic|foisonnement.py>,
     aditionner les sources de production de puissance électrique PV et
     éolien.
 
-    <item>Refaire les <with|font-shape|italic|pdf> des séries temporelles.\ 
+    <item>Commenter
 
-    <item>Que peut on observer ? La perte de puissance nocturne est elle
-    atténuée ?
+    <\enumerate>
+      <item>Les séries temporelles obtenues. L'agrégation permet elle de
+      diminuer les periodes sans puissance produite ? La perte de puissance
+      nocturne est elle atténuée ?
 
-    <item>Commenter la correlation des productions éléctriques dans ce cas
+      <item>Comparer les distributions obtenues avec une loi normale
+    </enumerate>
   </enumerate>
 
   <section|Intermittence>
 
-  Dans une première approche de l'intermittence, nous pouvons l'évaluer comme
-  la capacité à s'adapter à la variation de la consommation. Pour cela en
-  vous appuyant sur le programme <with|font-shape|italic|correlation_simple.py>,
+  Dans une première approche de l'intermittence, nous allons évaluer la
+  capacité à s'adapter à la variation de la consommation. C'est une manière
+  de combiner la prévisibilité de la variabilité et la fractionnabilité. Pour
+  cela en vous appuyant sur le programme <with|font-shape|italic|correlation_simple.py>,
   vous allez calculer la probabilité que le signe de la variation de la
   consommation, déterminée par le signe de
   <math|<around*|(|<frac|C<around*|(|t|)>-C<around*|(|t+\<tau\>|)>|<around*|\<langle\>|C|\<rangle\>>>|)>>
   et celui des sources respectivement nucléaire, éolien et solaire soient les
   mêmes.\ 
 
-  Commentez les valeurs obtenues, en faisant également varier <math|\<tau\>>
+  Commentez les valeurs obtenues, en faisant varier <math|\<tau\>>.\ 
+
+  Estimez les gains avec dans le cas du foisonnement et dans le cas de
+  l'agrégation.
 
   \;
 </body>
@@ -186,15 +222,15 @@
 <\references>
   <\collection>
     <associate|auto-1|<tuple|1|1>>
-    <associate|auto-10|<tuple|6|?>>
+    <associate|auto-10|<tuple|6|3>>
     <associate|auto-2|<tuple|2|1>>
     <associate|auto-3|<tuple|2.1|1>>
     <associate|auto-4|<tuple|2.2|1>>
-    <associate|auto-5|<tuple|3|1>>
-    <associate|auto-6|<tuple|3.1|1>>
-    <associate|auto-7|<tuple|3.2|?>>
-    <associate|auto-8|<tuple|4|?>>
-    <associate|auto-9|<tuple|5|?>>
+    <associate|auto-5|<tuple|3|2>>
+    <associate|auto-6|<tuple|3.1|2>>
+    <associate|auto-7|<tuple|3.2|2>>
+    <associate|auto-8|<tuple|4|2>>
+    <associate|auto-9|<tuple|5|3>>
   </collection>
 </references>
 

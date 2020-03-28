@@ -8,9 +8,12 @@ import os
 data_dir = "./DATA/" # repertoire des donnees
 trait_dir = "./TRAITEMENTS/" # repertoire des sorties
 
-filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
-#filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
+#filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
+filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
 #filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018.csv"
+
+
+
 
 data = np.genfromtxt( data_dir + filename, delimiter=',', deletechars='�', names=True )
 #data = data[0::2,:]
@@ -18,10 +21,9 @@ Horaire = np.loadtxt( data_dir + filename, dtype=str, usecols=(2,3), delimiter='
 
 print('')
 
+print( filename)
 print('2 fichiers sont sauvegardés:')
 print('-- le temps dans *hours*')
-
-
 
 def yyyymmddhhmm_hours( yyyymmdd, hhmm):
     # récupération données
@@ -67,8 +69,4 @@ if not os.path.isdir(trait_dir):
 
 np.savetxt( trait_dir + filename[:-3] + 'data' , data)
 np.savetxt( trait_dir + filename[:-3] + 'hours' , hours)
-
-
-
-
 

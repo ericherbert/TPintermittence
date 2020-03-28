@@ -37,10 +37,11 @@ plt.ylabel('Puissance [unités ?]')
 plt.show(block=False)
 
 # pour enregistrer la figure:
-# plt.savefig(traite_dir + figname)
+#plt.savefig(trait_dir + figname)
 
+print('')
+print(' fichier utilisé: ' + filename)
+print(' source utilisée ' + str(source) + '\n')
 print('Sur la periode considérée, on releve la moyenne et l ecart type:')
-print('moyenne')
-print( np.mean(queldata))
-print('ecart type')
-print( np.std(queldata))
+print('moyenne : ' + str(np.mean(queldata)))
+print('ecart type : ' + str( np.std(queldata)))

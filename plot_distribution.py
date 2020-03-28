@@ -18,7 +18,7 @@ queldata = data[ source,:]
 dt = 2
 queldata = (queldata[ dt:: ] - queldata[ :-dt: ]) / np.mean(queldata)
 # ajouter une gaussienne de même moyenne et écart type que la distribution ?
-plot_gaussienne = True
+plot_gaussienne = False
 mean = np.mean( queldata) # moyenne de la gaussienne
 std = np.std( queldata) # écart type de la gaussienne
 
@@ -31,7 +31,7 @@ plt.figure(figname)
 # bins = seuillage
 # log = axes logarithmiques
 # density = normalisation pdf telle que int (distribution) = 1
-plt.hist( queldata  , bins=100, log=1, density=1 )
+plt.hist( queldata  , bins=100, log=1, density=0 )
 plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
 
@@ -46,6 +46,9 @@ if plot_gaussienne:
 
 plt.show(block=False)
 
+print('')
+print(' fichier utilisé: ' + filename)
+print(' source utilisée ' + str(source) + '\n')
 print('Sur la periode considérée, on releve la moyenne et l ecart type:')
 print('moyenne')
 print( mean)
