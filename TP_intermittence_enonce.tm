@@ -43,7 +43,7 @@
 
   <subsection|Programmes>
 
-  Rendez vous sur la page <hlink|https://www.rte-france.com/fr/eco2mix/eco2mix-mix-energetique|>,
+  Rendez vous sur la page <hlink|https://github.com/ericherbert/TPintermittence|>,
   téléchargez l'ensemble du projet (bouton <with|font-shape|italic|clone or
   download>) et extraire les documents de l'archive. Vous y trouverez
 
