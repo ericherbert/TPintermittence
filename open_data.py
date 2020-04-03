@@ -42,12 +42,12 @@ def yyyymmddhhmm_hours( yyyymmdd, hhmm):
 
     return hours
 
-def nettoyage_donnéees(hours,data):
+def nettoyage_donnees(hours,data):
     print('-- les données sont dans *data* qui contient:')
     ref = ~np.isnan(data['Consommation'])
     hours = hours[ref[:-1]]
     inc = 0
-    do = ['Consommation','Nuclaire','Eolien','Solaire','Hydraulique']
+    do = ['Consommation','Nucleaire','Eolien','Solaire','Hydraulique']
     data2 = np.zeros(( len(do), np.sum(ref) ))
     for key in data.dtype.names:
         if key in do:
@@ -62,7 +62,7 @@ def nettoyage_donnéees(hours,data):
 
 hours = yyyymmddhhmm_hours( Horaire[1:-1,0], Horaire[1:-1,1] )
 
-data, hours = nettoyage_donnéees( hours, data)
+data, hours = nettoyage_donnees( hours, data)
 
 if not os.path.isdir(trait_dir):
     os.makedirs(trait_dir)
