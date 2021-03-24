@@ -1,12 +1,18 @@
-\documentclass{article}
-\usepackage[french]{babel}
+\documentclass[12pt,a4]{article}
+\usepackage[frenchb]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{geometry}
 
 %%%%%%%%%% Start TeXmacs macros
 \newcommand{\tmtextbf}[1]{{\bfseries{#1}}}
 \newcommand{\tmtextit}[1]{{\itshape{#1}}}
 %%%%%%%%%% End TeXmacs macros
+
+
+\geometry{top=2cm, bottom=2cm, left=2cm , right=2cm}
+
+
 
 \begin{document}
 
@@ -14,21 +20,21 @@
 
 \maketitle
 
-Le compte rendu de ce TP devra être rendu sous forme numérique, en pdf,
-édité à l'aide d'un outil tel que latex ou LibreOffice. Les figures seront
+Le compte rendu de ce TP devra être rendu sous forme numérique, en \textbf{pdf},
+édité à l'aide d'un outil tel que \textit{Latex} ou \textit{LibreOffice}. Les figures seront
 commentées et choisies selon leur pertinence.
 
 \section{Avant de commencer}
 
 L'intermittence est une notion très précise en physique, qui signifie que
-l'on observe pour une variable aléatoire des fluctuations de grande amplitude
-qui s'écartent de la loi normale. Cependant dans le débat publique lié à
+l'on observe pour une variable aléatoire des fluctuations de grande amplitude dont la fréquence s'écarte de celle attendue pour une loi normale. Par exemple la distribution des incréments de vitesse dans un écoulement turbulent\footnote{on trouvera une abondante littérature sur le sujet à l'aide d'un moteur de recherche} ne suit pas exactement la loi normale.
+Cependant dans le débat lié à
 la production de puissance, et notamment dans la comparaison entre les
-énergie de flux (éolien solaire) et les énergies de stock (nucléaire,
+énergie de flux (éolien, photovoltaïque, appelé PV dans la suite) et les énergies de stock (nucléaire,
 fossile) dans leur capacité à répondre à une demande de puissance
 électrique, cette définition n'est pas suffisante. En effet, par exemple,
 une variation parfaitement prévisible est que le PV ne produira jamais de
-puissance la nuit, et ne pourra donc jamais satisfaire une demande quel que
+puissance la nuit, et ne pourra donc jamais satisfaire une demande quelle que
 soit la taille du parc installé. Ainsi, il est nécessaire de tenir compte
 des caractéristiques intrinsèques de la production et de la consommation et
 de leur couplage, et d'identifier les notions suivantes:
@@ -39,50 +45,54 @@ de leur couplage, et d'identifier les notions suivantes:
   \item Prévisibilité de la production (la nuit, pas de production PV)
   
   \item Fractionnabilité, c'est à dire la possibilité de n'utiliser qu'une
-  partie de la production 
+  partie de la puissance installée (il n'est pas possible d'arrêter une demie tranche nucléaire)  
 \end{itemize}
 Ces paramètres mènent à une grande confusion. Nous allons essayer dans ce
 TP de percevoir les caractéristiques des différentes sources de production
 de puissance électrique et d'en extraire une estimation simple de
 l'intermittence.
 
+Nous nous appuierons pour cela sur les données de production et d'échange de puissance électrique produites par RTE le Réseau de Transport Électrique français.
+
+
 \section{Récupérer les données et les programmes}
 
 \subsection{Programmes}
 
-Rendez vous sur la page
-\href{}{https://github.com/ericherbert/TPintermittence}, téléchargez
-l'ensemble du projet (bouton \tmtextit{clone or download}) et extraire les
+Rendez vous sur la page \newline
+\href{https://github.com/ericherbert/TPintermittence}{https://github.com/ericherbert/TPintermittence} et téléchargez l'ensemble du projet (bouton \tmtextit{clone or download}) et extraire les
 documents de l'archive. Vous y trouverez
 \begin{itemize}
   \item Le dossier \tmtextit{DATA} contenant les données dont vous avez
   besoin si la phase de téléchargement des données sur le site de
   \tmtextit{RTE} n'a pas fonctionné
   
-  \item L'énoncé en pdf
+  \item L'énoncé du TP en pdf
   
   \item Des programmes \tmtextit{Python} permettant la réalisation de ce TP.
 \end{itemize}
-Ce TP doit normalement être effectué sur l'application \tmtextit{JupyterHub}
+Ce TP est prévu pour être effectué sur l'application \tmtextit{JupyterHub}
 de l'UFR. Vous le trouverez à l'adresse suivante
-\href{https://jupy.physique.univ-paris-diderot.fr/}{https://jupy.physique.univ-paris-diderot.fr/}.
-Vous devez normalement pouvoir vous y connecter avec vos identifiants ENT. En
-cas de problème, m'écrire.
+\href{https://jupy.physique.univ-paris-diderot.fr/}{https://jupy.physique.univ-paris-diderot.fr/}. Vous devez normalement pouvoir vous y connecter avec vos identifiants ENT. En
+cas de problème, m'écrire.\footnote{eric.herbert@u-paris.fr}
 
-Remarque sur les données de RTE: Légalement EDF doit acheter toutes la
-production PV et eolien, donc la puissance de ces sources injectées dans le
-réseau est toujours la maximale possible. Inversement, les source fossiles,
-nucléaire et hydraulique étant pilotables, elles s'adaptent à la variation
-de la consommation.
+Si vous disposez d'une installation Python 3 vous pouvez également effectuer le travail sur cette machine.
+
+Remarque sur les données de RTE: EDF est tenu légalement d'acheter toutes la
+production électrique des sources PV et eolien, donc la puissance de ces sources injectées dans le réseau est toujours la puissance maximale possible avec les installations disponibles. Inversement, les source fossiles, nucléaire et hydraulique étant pilotables, elles s'adaptent à la variation de la consommation.
+
 
 \subsection{Données}
 
 \begin{enumerate}
-  \item Se rendre sur le site de RTE à l'adresse
-  \href{}{https://www.rte-france.com/fr/eco2mix/eco2mix-mix-energetique}
+  \item Se rendre sur le site de RTE à l'adresse 
+  \href{https://www.rte-france.com/}{https://www.rte-france.com/} puis naviguer vers l'onglet Production d'électricité par filière.
   
-  \item Identifier les différentes sources de puissance, comparer
-  qualitativement sur différentes periodes leur série temporelle.
+  \item Identifier les différentes sources de puissance, les flux exportés et importés.
+  
+  \item  Comparer qualitativement sur différentes periodes leur série temporelle.
+  
+  \item Faire un bilan comparatif des deux points précédents
   
   \item Choisir une periode spécifique et télécharger les données
   correspondantes. Noter la durée, la fréquence d'échantillonnage, les
@@ -92,16 +102,18 @@ de la consommation.
   
   \item Utiliser le programme \tmtextit{open\_data.py} que vous aurez modifié
   pour votre usage, pour extraire les différentes données. Noter le nom et
-  la colonne de chaque mesurable (Consommation, nucléaire etc). Si besoin
-  dans le repertoire \tmtextit{DATA}, des données provenant de RTE sont
-  disponibles.
+  la colonne de chaque mesurable (Consommation, nucléaire etc). 
 \end{enumerate}
+
+
+Si besoin dans le repertoire \tmtextit{DATA}, des données provenant de RTE sont
+disponibles.
 
 \section{Traitement}
 
 Dans la suite on s'interessera uniquement aux sources de production
-nucléaire, éolien et solaire. L'expression \tmtextit{les 3 sources} s'y
-réfère
+nucléaire, éolien et PV. L'expression \tmtextit{les 3 sources} s'y
+réfère.
 
 \subsection{Séries temporelles}
 
@@ -117,10 +129,13 @@ réfère
     
     \item Sur les diagrammes journaliers, repérez les différentes parties de
     la journée
+    
+    \item les éventuelles variations régionales de production de puissance
   \end{enumerate}
   \item Extraire les moyennes temporelles $\langle x \rangle$ et écart type
   $\sigma_x$ de chacune des sources sur chacune des periodes considérées.
-  Quelles sont les limitations de l'emploi des quantités $\sigma_x / \langle
+  Quelles sont les limitations de l'emploi des quantités $\sigma_x $, $ \langle
+  x \rangle$ et de la variation relative $\sigma_x / \langle
   x \rangle$, pour caractériser chacune des sources ?
 \end{enumerate}
 
@@ -131,49 +146,52 @@ réfère
   la variation de la distribution de la \tmtextbf{consommation} normalisée
   par sa moyenne temporelle $\frac{C (t) - C (t + \tau)}{\langle C \rangle}$,
   avec un pas de temps $\tau$ d'une heure puis de 24 heures. Faire de même
-  pour les 3 sources. Représenter les \tmtextit{densités de probabilité}
+  pour chacune des 3 sources. Représenter les \tmtextit{densités de probabilité}
   (pdf) de ces fonctions en vous appuyant sur le paramètre \tmtextit{density}
   de la fonction histogramme, puis comparer ces distributions avec une loi
   normale (Gaussienne) de même moyenne et écart type. Ajouter les unités,
   noms des axes et enregistrer les figures. Vous choisirez la représentation
-  (logarithmique ou linéaire) qui vous paraitra la plus pertinente.
+  (logarithmique ou linéaire) qui vous paraitra la plus pertinente en le justifiant.
   
   \item Après avoir justifié qu'une distribution normale représente des
-  fluctuations aléatoire, discuter avec $\tau = 1 h$ et 24h les écarts de la
+  fluctuations aléatoire, discuter avec $\tau = 1$\,h et 24\,h les écarts de la
   pdf de la production électrique à cette loi pour les 3 sources.
 \end{enumerate}
 
 \section{Agrégation}
 
-L'agrégation consiste à séparer les sources de puissances de même nature
-pour profiter de conditions climatiques le plus décorrélées possible.
+Pour une source de puissance particulière, l'agrégation consiste à étendre la production spatialement pour profiter de conditions climatiques le plus décorrélées possible (cas aléatoire) ou anticorrélées (cas déterministe)
 \begin{enumerate}
+	\item Expliquer pourquoi des conditions climatiques décorrélées ou anticorrélées sont avantageuses.
+	
   \item À partir du programme \tmtextit{agregation.py} qui utilise des
   données issues de \tmtextit{RTE} décrivant la production électrique
-  issues de deux régions, représenter puis aditionner les sources
+  issues de deux régions, représenter puis additionner les sources
   électriques PV ou éolien.
   
-  \item Commenter
+  \item Discuter
   \begin{enumerate}
     \item Les séries temporelles obtenues. L'agrégation permet elle de
     diminuer les periodes sans puissance produite ?
     
     \item Comparer les distributions obtenues avec une loi normale
+    
+    \item Calculer la covariance $cov=\langle (X-\langle X \rangle)(Y - \langle Y \rangle)\rangle $ et le coefficient de corrélation $r=\frac{cov}{\sigma_X \sigma_Y}$ avec $X$ et $Y$ les productions de puissance instantanées des deux régions considérées. Conclure.
   \end{enumerate}
 \end{enumerate}
 
 \section{Foisonnement}
 
 Le foisonnement consiste à multiplier les sources de production de puissance
-à priori décorrélées \ pour tendre vers une distribution. Il s'agit de s
-'appuyer sur une conséquence du théorème central limite qui prédit un
-comportemnet aléatoire d'une somme de variables elle même aléatoires. La
-condition étant que les varaibles soient absolument décorrélées. En vous
-appuyant sur le programme \tmtextit{foisonnement.py} aditionner les sources
-éolien et PV et retpésenter la série temporelle correspondante.
+à priori décorrélées pour tendre vers une distribution normale. Il s'agit de s'appuyer sur une conséquence du théorème central limite qui prédit un
+comportement aléatoire d'une somme de variables elles même aléatoires. La
+condition étant que les variables soient absolument décorrélées. En vous
+appuyant sur le programme \tmtextit{foisonnement.py} additionner les sources
+éolien et PV et représenter la série temporelle correspondante.
+
 \begin{enumerate}
   \item À partir du programme \tmtextit{foisonnement.py}, aditionner les
-  sources de production de puissance électrique PV et éolien.
+  sources de production de puissance électrique PV et éolien d'un espace géographique que l'on précisera 
   
   \item Commenter
   \begin{enumerate}
@@ -182,25 +200,31 @@ appuyant sur le programme \tmtextit{foisonnement.py} aditionner les sources
     nocturne est elle atténuée ?
     
     \item Comparer les distributions obtenues avec une loi normale
+    
+    \item Calculer la covariance $cov=\langle (X-\langle X \rangle)(Y - \langle Y \rangle)\rangle $ et le coefficient de corrélation $r=\frac{cov}{\sigma_X \sigma_Y}$ avec $X$ et $Y$ les productions de puissance instantanées des sources considérées. Conclure.
+    
   \end{enumerate}
 \end{enumerate}
 
 \section{Intermittence}
 
 Dans une première approche de l'intermittence, nous allons évaluer la
-capacité à s'adapter à la variation de la consommation. C'est une manière
-de combiner la prévisibilité de la variabilité et la fractionnabilité.
+capacité d'une source de production de puissance à la variation de la consommation. C'est une manière de combiner la prévisibilité de la variabilité et la fractionnabilité.
+
+REPRENDRE EN CALCULANT PLUTÖT LA COVARIANCE.
+
 Pour cela en vous appuyant sur le programme \tmtextit{correlation\_simple.py},
 vous allez calculer la probabilité que le signe de la variation de la
 consommation, déterminée par le signe de $\left( \frac{C (t) - C (t +
 \tau)}{\langle C \rangle} \right)$ et celui des sources respectivement
 nucléaire, éolien et solaire soient les mêmes.
+\begin{enumerate}
+	\item Commentez les valeurs obtenues, en faisant varier $\tau$.
+	
+	\item Estimez les gains avec dans le cas du foisonnement et dans le cas de l'agrégation.
+	
+\end{enumerate}
 
-Commentez les valeurs obtenues, en faisant varier $\tau$.
-
-Estimez les gains avec dans le cas du foisonnement et dans le cas de
-l'agrégation.
-
-\
+\section{Conclure}
 
 \end{document}
