@@ -1,4 +1,4 @@
 TRAITEMENTS
-TP_intermittence_enonce.aux
-TP_intermittence_enonce.log
-TP_intermittence_enonce.out
+*.aux
+*.log
+*.out
