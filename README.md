@@ -5,12 +5,13 @@ Ce dépot contient tout le materiel pour effectuer le TP intermittence. Vous dev
 1. Récupérer l'énoncé en pdf
 1. vous connecter à JupyterHub grace à vos identifiants ENT.
 1. Pour prétraiter des données issues de RTE:
-a. exporter en *csv*. Utiliser des **,** comme séparateurs
-c. ouvrir le fichier et enlever les caractères accentués (*é*, *è* etc) et éventuellement les remplacer par des lettres sans accentuation.
-c. trouver le délimiteur des dates (- ou / etc)
-c. vérifier si la date est écrite en jour mois année ou années mois jour 
-b. ouvrir *open_data.py*
-b. mettre à jour le chemin
-b. **si besoin**  mettre à jour les délimiteurs de la date lignes 31 et 32, 37 et 38
-b. **si besoin**  mettre à jour l'ordre de la date date lignes 33 et 39
+    1. exporter en *csv*. Utiliser des **,** comme séparateurs
+    1. ouvrir le fichier et enlever les caractères accentués (*é*, *è* etc) et éventuellement les remplacer par des lettres sans accentuation.
+    1. trouver le délimiteur des dates (- ou / etc)
+    1. vérifier si la date est écrite en jour mois année ou années mois jour 
+    1. ouvrir *open_data.py*
+    1. mettre à jour le chemin
+    1. **si besoin**  mettre à jour les délimiteurs de la date lignes 31 et 32, 37 et 38
+    1. **si besoin**  mettre à jour l'ordre de la date date lignes 33 et 39
+    1. Un exemple de fichier *xls*, exporté en *csv* et le fichier *open_data.py* modifié correspondant sont disponibles dans */Data/preparationDATA/*
 
