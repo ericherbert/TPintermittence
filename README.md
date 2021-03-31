@@ -4,8 +4,8 @@ Ce dépot contient tout le materiel pour effectuer le TP intermittence. Vous dev
 1. télécharger le dépot à l'aide du bouton vert *Clone or Download*
 1. Récupérer l'énoncé en pdf
 1. vous connecter à JupyterHub grace à vos identifiants ENT.
-1. Pour prétraiter des données issues de RTE:
-    1. exporter en *csv*. Utiliser des **,** comme séparateurs
+1. Pour prétraiter des données *xls* issues de RTE:
+    1. exporter les données en *csv*. Utiliser des "**,**" comme séparateurs
     1. ouvrir le fichier et enlever les caractères accentués (*é*, *è* etc) et éventuellement les remplacer par des lettres sans accentuation.
     1. trouver le délimiteur des dates (- ou / etc)
     1. vérifier si la date est écrite en jour mois année ou années mois jour 
