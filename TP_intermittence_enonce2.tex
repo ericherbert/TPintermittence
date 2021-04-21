@@ -49,9 +49,9 @@ Nous allons dans cette partie normaliser la quantité d'énergie produite sur un
 
 Quantifier $C_0$ la totalité de l'énergie consommée dans l'année choisie. Représenter la somme cumulée et normalisée de la consommation de puissance sur cette année:
 \begin{equation}
-	c^*(T)  = \frac{1}{C_0} \int_{0}^{T}C(t) \; d t	
+	C^*(T)  = \frac{1}{C_0} \int_{0}^{T}P_C(t) \; d t	
 \end{equation}
-Cette expression représente une série temporelle, l'intégrale  s'appliquant entre $t=0$ et $t=T$. À chaque pas de temps, cette expression représente l'énergie produite depuis le début de l'année. Par construction vous devez vérifier que $c^*(0)=0$ et $c^*(T_0)=1$ avec $T_0$ correspondant à un an. 
+Cette expression représente une série temporelle, l'intégrale  s'appliquant entre $t=0$ et $t=T$. À chaque pas de temps, cette expression représente l'énergie produite depuis le début de l'année. Par construction vous devez vérifier que $C^*(0)=0$ et $C^*(T_0)=1$ avec $T_0$ correspondant à un an. 
 
 
 Les questions suivantes sont à discuter pour chaque source, PV et éolien.
@@ -61,9 +61,17 @@ Les questions suivantes sont à discuter pour chaque source, PV et éolien.
 	E^*(t)  = \frac{1}{E_0} \int_{0}^{T} P(t) \; d t	
 	\end{equation}
 	Verifier que $E^*(0)=0$ et $E^*(T_0)=1$ avec $T_0$ correspondant à un an. 
-	\item Vous vous êtes ainsi assuré de produire exactement sur l'année la quantité d'énergie nécessaire à la consommation, sans sur-production, sans sous-production. Cependant la synchronisation de la consommation et de la production ne sont pas assurées. Pour cela il faut que $E^*$ et $c^*$ soient égaux à chaque pas de temps. Est ce le cas ? Si non, quelle conséquence en tirer ?
-	\item Tracer la série temporelle de la différence $\Delta(T) = E^*(T) - c^*(T)$. Justifier que $\Delta $ représente le besoin de stockage à chaque instant
+	
+	\item Tracer la série temporelle de la différence des puissances normalisées $\delta(t) = \frac{P(t)}{E_0} - \frac{C(t)}{C_0}$. Vérifier que $\int \delta dt $ sur un an est bien nul.
+	
+	\item Vous vous êtes ainsi assuré de produire exactement sur l'année la quantité d'énergie nécessaire à la consommation, sans sur-production, sans sous-production. Cependant la synchronisation de la consommation et de la production ne sont pas assurées. Pour cela il faut que $E^*$ et $C^*$ soient égaux à chaque pas de temps. Est ce le cas ? Si non, quelle conséquence en tirer ?
+	
+	
+	
+	\item Tracer la série temporelle de la différence des sommes cumulées $\Delta(T) = E^*(T) - C^*(T)$. Justifier que $\Delta $ représente le besoin de stockage à chaque instant
+	
 	\item En déduire une évaluation du volume de stockage $S$ nécessaire en fraction de la consommation annuelle $C_0$.
+	
 	\item Comment $S$ dépend de la periode choisie ?
 	
 \end{enumerate}
