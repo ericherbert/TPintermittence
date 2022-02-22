@@ -2,3 +2,6 @@ TRAITEMENTS
 *.aux
 *.log
 *.out
+*.gz
+fontconfig
+old/
