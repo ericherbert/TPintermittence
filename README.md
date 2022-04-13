@@ -1,3 +1,7 @@
+## notes pour l'année prochaine
+1. faire calculer un facteur de charge pour le foisonnement et l'agrégation
+2. enlever les refs au random après la première question
+
 ## contenu de ce Dépot
 Ce dépot contient tout le materiel pour effectuer le TP intermittence. Vous devez:
 
