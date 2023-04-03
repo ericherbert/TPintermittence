@@ -10,6 +10,7 @@ def covariance(x,y):
     
     
 def correlation(x,y):
+# alternativement vous pouvez utiliser la fonction np.correlate
     cov = covariance(x,y)
     std_x = np.std(x)
     std_y = np.std(y)
