@@ -1,9 +1,38 @@
-\documentclass[12pt,a4]{article}
-\usepackage[frenchb]{babel}
+\documentclass[12pt,a4,french]{article}
 \usepackage[utf8]{inputenc}
-\usepackage{hyperref}
-\usepackage{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{epsfig}
+\usepackage{babel}
 \usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{vmargin}
+\usepackage{wrapfig}
+\usepackage{times}
+\usepackage{enumerate}
+\usepackage[table]{xcolor}
+\pagestyle{fancyplain}
+\usepackage{hyperref}
+
+\setmargins{2.5cm}{2cm}{16cm}{23.5cm}{0cm}{0cm}{1cm}{1cm}
+
+\baselineskip 20mm
+\headheight=0mm
+\headsep=15mm
+\setlength\textheight{230mm}
+
+\newcommand{\re}{\color{red}}
+
+\newcommand{\be}{\begin{equation}}
+	\newcommand{\ee}{\end{equation}}
+\newcommand{\ba}{\begin{eqnarray}}
+	
+	\newcommand{\ea}{\end{eqnarray}}
+\newcommand{\dal}{\raisebox{0.085cm}}
+\newcommand{\dslash}{{\not\!\partial}}
+
+\newcommand{\vv}{\overrightarrow}
 
 %%%%%%%%%% Start TeXmacs macros
 \newcommand{\tmtextbf}[1]{{\bfseries{#1}}}
@@ -11,26 +40,53 @@
 %%%%%%%%%% End TeXmacs macros
 
 
-\geometry{top=2cm, bottom=2cm, left=2cm , right=2cm}
+%\geometry{top=2cm, bottom=2cm, left=2cm , right=2cm}
 
 
 
 \begin{document}
 
-\title{TP intermittence}
+	
+	
+	
+	\lhead[\fancyplain{}{\thepage}]{\fancyplain{}{Université Paris Cité 2022 -- 23}}
+	\chead{}
+	\rhead[\fancyplain{}{\rightmark}]{\fancyplain{}{M1 -- Énergie}}
+	
+	%\cfoot{}
+	
+	\begin{center}
+		\begin{tabular}{c}
+			{\Large  \textsc{Énoncé de TP}}\\
+			{\Large{Intermittence}}\\
+			\\
+			%\hline
+		\end{tabular}
+		
+		\normalsize 
+		
+		\hrule
+		\vspace{0.5cm}
+		
+		--- ATTENTION ---\\
+		Pour accéder à la salle de TP vous devrez présenter le travail effectué pour répondre aux questions posées dans la section~\ref{sec:avant}.
+		
+		\vspace{0.5cm}
+		\hrule
+	\end{center}
 
-\maketitle
+
 
 Le compte rendu de ce TP devra être rendu sous forme numérique, en \textbf{pdf},
 édité à l'aide d'un outil tel que \textit{Latex}, \textit{Texmacs} ou \textit{LibreOffice}. Les figures seront
 commentées et choisies selon leur pertinence.
 \textbf{Votre nom} et le \textbf{titre du TP}  devront apparaitre dans le titre de votre compte rendu.
 Envoyez votre rapport à l'adresse  \href{mailto:eric.herbert@u-paris.fr}{eric.herbert@u-paris.fr}. \\
-Vous allez générer dans pour ce TP un grand nombre de figures. N'oubliez pas de toujours les nommer de manière à pouvoir les retrouver, inscrire les axes et dimensions. Enfin vous pouvez (devez) opérer une sélection pour votre rapport.
+Vous allez générer dans ce TP un grand nombre de figures. N'oubliez pas de toujours les nommer de manière à pouvoir les retrouver, inscrire les axes et dimensions. Enfin vous pouvez (devez) opérer une sélection pour votre rapport.
 
 
 \part{Avant la séance}
-
+\label{sec:avant}
 L'intermittence est une notion très précise en physique, qui signifie que
 l'on observe pour une variable aléatoire des fluctuations de grande amplitude dont la fréquence s'écarte de celle attendue pour une loi normale. Par exemple la distribution des incréments de vitesse dans un écoulement turbulent\footnote{On trouvera une abondante littérature sur le sujet à l'aide d'un moteur de recherche. Ce matériau pourra servir à l'introduction de votre rapport} ne suit pas exactement la loi normale.
 Cependant dans le débat lié à
@@ -245,7 +301,7 @@ Pour cela en vous appuyant sur les programmes précédents, vous allez calculer 
 
 
 
-\part{Stockage}
+\part{Stockage et Conversion}
 L'objet de cette partie est d'évaluer et de dimensionner les solutions à mettre en oeuvre pour compenser l'intermittence intrinsèque de sources de puissance. On supposera que la puissance requise est toujours fournie et qu'elle correspond à la consommation.
 
 
@@ -298,7 +354,7 @@ Vous allez à présent estimer la quantité d'énergie et le volume correspondan
 
 \begin{enumerate}
 	\item Convertir le volume de stockage normalisé trouvé dans la section précédente en une unité d'énergie.
-	\item La solution du dihydrogène est souvent mis en enavanvt pour les grands volumes de stockahe, expliquer pourquoi.
+	\item La solution du dihydrogène est souvent mis en avant pour les grands volumes de stockahe, expliquer pourquoi.
 	\item Convertir $S$ en volume et en masse d'hydrogène.
 \end{enumerate}
 
