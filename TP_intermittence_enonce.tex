@@ -119,40 +119,40 @@ Nous nous appuierons pour cela sur les données de production et d'échange de p
 
 \subsection{Programmes}
 
-Rendez vous sur la page \newline
-\href{https://github.com/ericherbert/TPintermittence}{https://github.com/ericherbert/TPintermittence} et téléchargez l'ensemble du projet (bouton \tmtextit{clone or download}) et extraire les
-documents de l'archive. Vous y trouverez
+Se rendre sur la page
+\href{https://github.com/ericherbert/TPintermittence}{https://github.com/ericherbert/TPintermittence}. Télécharger l'ensemble du projet (bouton \tmtextit{clone or download}) et extraire les documents de l'archive. Vous y trouverez:
 \begin{itemize}
-  \item Le dossier \tmtextit{DATA} contenant les données dont vous avez   besoin si l'extraction des données téléchargées depuis le site de   \tmtextit{RTE} n'a pas fonctionné
+  \item Le dossier \tmtextit{DATA} contenant les données dont vous aurez besoin. Une autre possibilité est de télécharger des données nouvelles depuis le site de \tmtextit{RTE}.
   
-  \item L'énoncé du TP en pdf
+  \item L'énoncé du TP en pdf.
   
   \item Des programmes \tmtextit{Python} permettant la réalisation de ce TP. Le programme \textit{outils.pdf} contient des fonctions pour calculer la covariance et la corrélation.
 \end{itemize}
+
 Ce TP est prévu pour être effectué sur python. Si vous ne disposez pas d'une installation fonctionnelle, l'application \tmtextit{JupyterHub} de l'UFR vous permettra de travailler via votre explorateur web et sans rien installer sur votre machine. Vous la trouverez à l'adresse suivante
 \href{https://jupy.physique.univ-paris-diderot.fr/}{https://jupy.physique.univ-paris-diderot.fr/}. Vous devez normalement pouvoir vous y connecter avec vos identifiants ENT.\\
 Si vous disposez d'une installation Python~3 vous pouvez également effectuer le travail sur cette machine.
 
 
-\subsection{Données}
+\subsection{Données} \label{donnees}
 
 Remarque sur les données de RTE: EDF est tenu légalement d'acheter toutes la
-production électrique des sources PV et eolien, donc la puissance de ces sources injectées dans le réseau est toujours la puissance maximale possible avec les installations disponibles. Inversement, les source fossiles, nucléaire et hydraulique étant pilotables, elles s'adaptent à la variation de la consommation.
+production électrique des sources PV et eolien, donc la puissance de ces sources injectées dans le réseau est toujours la puissance maximale possible avec les installations disponibles. Inversement, les source fossiles, nucléaire et hydraulique (et les flux d'importation ou d'exportation) s'adaptent à la variation de la consommation et la production de puissance PV et éolien.
 
+Une première exploration doit être faite sur le site de RTE:
 \begin{enumerate}
   \item Se rendre sur le site de RTE à l'adresse 
   \href{https://www.rte-france.com/}{https://www.rte-france.com/} puis naviguer vers l'onglet Production d'électricité par filière.\footnote{Sinon accessible ici \href{https://www.rte-france.com/eco2mix/la-production-delectricite-par-filiere}{https://www.rte-france.com/eco2mix/la-production-delectricite-par-filiere}. Un bouton \textit{téléchargement} est disponible en bas de la page.}
   
   \item Identifier les différentes sources de puissance, les flux exportés et importés.
   
-  \item  Comparer qualitativement sur différentes périodes leur série temporelle.
+  \item Comparer qualitativement sur différentes périodes leur série temporelle.
   
   \item Faire un bilan comparatif des deux points précédents
 \end{enumerate}
 
-À présent nous allons explorer une période spécifique de production de puissance. Vous aurez également besoin de données situées dans des régions géographiques éloignées.
-  
-\begin{enumerate}  
+Pour la réalisation du TP, nous allons exploiter les données issues de RTE qui sont déjà présentes dans le répertoire \textit{DATA} que vous avez télécharger précédemment. Vous pouvez également travailler sur des données nouvelles, en suivant la procédure suivante:
+  \begin{enumerate}  
   \item Choisir une période et télécharger les données
   correspondantes. Noter la durée, la fréquence d'échantillonnage, les
   sources disponibles. 
@@ -163,85 +163,82 @@ production électrique des sources PV et eolien, donc la puissance de ces source
   \item Utiliser le programme \tmtextit{open\_data.py} que vous aurez modifié
   pour votre usage, pour extraire les différentes données. Noter le nom et
   la colonne de chaque mesurable (Consommation, nucléaire etc). 
-  
 \end{enumerate}
 
-
-Si besoin, dans le repertoire \tmtextit{DATA}, des données provenant de RTE sont
-disponibles.
+Vous réaliser ce TP vous pouvez utiliser les données disponibles dans le répertoire \tmtextit{DATA}.
 
 
-\part{Traitement}
 
+\subsection{Séries temporelles. Consommation et 3 Sources} \label{serie_temporelle}
 Dans la suite on s'interessera uniquement aux sources de production
 nucléaire, éolien et PV. L'expression \tmtextit{les 3 sources} s'y
 réfère.
 
+\begin{enumerate}
+	\item À l'aide du programme \tmtextit{plot\_data.py}, représenter la
+	dynamique temporelle de la \tmtextbf{consommation} $i-$journalière, $ii-$mensuelle
+	et $iii-$annuelle. Ajoutez les unités et enregistrez ces figures de manière à
+	pouvoir les retrouver simplement, et faites de même pour les trois sources de puissance.
+	
+	\begin{enumerate}
+		\item Sur les diagrammes annuels, repérez les différentes saisons
+		
+		\item Sur les diagrammes journaliers, repérez les différentes parties de
+		la journée
+		
+		\item les éventuelles variations régionales de production de puissance
+	\end{enumerate}
+	\item Extraire et présenter de manière synthétique les moyennes temporelles $\langle x \rangle$ et écart type $\sigma_x$ de chacune des sources sur chacune des periodes considérées. \newline
+	Quelles sont les limitations de l'emploi des quantités $\sigma_x $, $ \langle
+	x \rangle$ et de la variation relative $\sigma_x / \langle
+	x \rangle$, pour caractériser chacune des sources ?
+\end{enumerate}
+
+\vspace{1cm}
+\hrule
+\vspace{0.5cm}
+Pour commencer le TP vous devez présenter sur papier ou m'avoir envoyé en pdf la rédaction des questions correspondants aux parties \ref{donnees} et \ref{serie_temporelle}.
+\vspace{0.5cm}
+\hrule
+
+\newpage
+\part{Traitement}
 
 \section{Séries temporelles}
 
 
-\subsection{Séries temporelles. Consommation et 3 Sources}
 
-\begin{enumerate}
-  \item À l'aide du programme \tmtextit{plot\_data.py}, représenter la
-  dynamique temporelle de la \tmtextbf{consommation} $i-$journalière, $ii-$mensuelle
-  et $iii-$annuelle. Ajoutez les unités et enregistrez ces figures de manière à
-  pouvoir les retrouver simplement, et faites de même pour les trois sources.
- 
-  \begin{enumerate}
-    \item Sur les diagrammes annuels, repérez les différentes saisons
-    
-    \item Sur les diagrammes journaliers, repérez les différentes parties de
-    la journée
-    
-    \item les éventuelles variations régionales de production de puissance
-  \end{enumerate}
-  \item Extraire les moyennes temporelles $\langle x \rangle$ et écart type
-  $\sigma_x$ de chacune des sources sur chacune des periodes considérées.
-  Quelles sont les limitations de l'emploi des quantités $\sigma_x $, $ \langle
-  x \rangle$ et de la variation relative $\sigma_x / \langle
-  x \rangle$, pour caractériser chacune des sources ?
-\end{enumerate}
-
-\subsection{Distribution des séries temporelles. Consommation et 3 Sources}
-
+\subsection{Distribution et autocorrélation des séries temporelles. Consommation et 3 Sources}
+Dans un premier temps, afficher les distributions des séries temporelles.
 \begin{enumerate}
   \item À l'aide du programme \tmtextit{plot\_distribution.py}, représenter
   la variation de la distribution de la \tmtextbf{consommation} normalisée
-  par sa moyenne temporelle $\frac{C (t) - C (t + \tau)}{\langle C \rangle}$,
-  avec un pas de temps $\tau$ d'une heure puis de 24 heures. Faire de même
-  pour chacune des 3 sources. Représenter les \tmtextit{densités de probabilité}
+  par sa moyenne temporelle $\frac{C (t)}{\langle C \rangle}$. Faire de même pour chacune des 3 sources.
+  \item  Représenter les \tmtextit{densités de probabilité}
   (pdf) de ces fonctions en vous appuyant sur le paramètre \tmtextit{density}
-  de la fonction histogramme, puis comparer ces distributions avec une loi
-  normale (Gaussienne) de même moyenne et écart type. Ajouter les unités,
-  noms des axes et enregistrer les figures. Vous choisirez la représentation
-  (logarithmique ou linéaire) qui vous paraitra la plus pertinente en le justifiant.
-  
+  de la fonction histogramme. 
+  \item Ajouter sur chacune des figures une loi normale (Gaussienne) de même moyenne et écart type. Ajouter les unités,  noms des axes et enregistrer les figures. Vous choisirez la représentation (logarithmique ou linéaire) qui vous paraîtra la plus pertinente en le justifiant.
   \item Après avoir justifié qu'une distribution normale représente des
-  fluctuations aléatoire, discuter avec $\tau = 1$\,h et 24\,h les écarts de la
-  pdf de la production électrique à cette loi pour les 3 sources.
+  fluctuations aléatoire, les écarts de la pdf de la production électrique à cette loi pour les 3 sources et la consommation.
 \end{enumerate}
+
+Dans un deuxième temps, représenter les autocorrélations de la consommation $\frac{\text{cov}(C(t),C(t+\tau)) }{\sigma^2_x}$ et des 3 sources.\footnote{On rappelle que le coefficient de corrélation s'écrit $r=\frac{cov}{\sigma_X \, \sigma_Y}$ avec $X$ et $Y$ et $cov$ la covariance. Des codes sont proposés dans \textit{outils.py}} Discuter les figures obtenues.
 
 \section{Agrégation}
 
 Pour une source de puissance particulière, l'agrégation consiste à étendre la production spatialement pour profiter de conditions climatiques le plus décorrélées possible (cas aléatoire) ou anticorrélées (cas déterministe)
 \begin{enumerate}
 	\item Expliquer pourquoi des conditions climatiques décorrélées ou anticorrélées sont avantageuses.
-	
-  \item À partir du programme \tmtextit{agregation.py} qui utilise des
+  	\item À partir du programme \tmtextit{agregation.py} qui utilise des
   données issues de \tmtextit{RTE} décrivant la production électrique
   issues de deux régions, représenter puis additionner les sources
   électriques PV \textbf{ou} éolien.
-  
-  \item Discuter
+	\item Discuter les séries temporelles obtenues:
   \begin{enumerate}
-    \item Les séries temporelles obtenues. L'agrégation permet elle de
+    \item L'agrégation permet elle de
     diminuer les periodes sans puissance produite ?
-    
     \item Comparer les distributions obtenues avec une loi normale
-    
-    \item Calculer la covariance\footnote{Des codes de la covariance et de la corrélation sont proposés dans \textit{outils.py}} $cov=\langle (X-\langle X \rangle)(Y - \langle Y \rangle)\rangle $ et le coefficient de corrélation $r=\frac{cov}{\sigma_X \, \sigma_Y}$ avec $X$ et $Y$ les productions de puissance instantanées des deux régions considérées. Conclure.
+    \item Calculer la corrélation des productions de puissance instantanées des deux régions considérées. Conclure.
   \end{enumerate}
 \end{enumerate}
 
@@ -266,7 +263,7 @@ appuyant sur le programme \tmtextit{foisonnement.py} additionner les sources
     
     \item Comparer les distributions obtenues avec une loi normale
     
-    \item Calculer la covariance $cov=\langle (X-\langle X \rangle)(Y - \langle Y \rangle)\rangle $ et le coefficient de corrélation $r=\frac{cov}{\sigma_X \, \sigma_Y}$ avec $X$ et $Y$ les productions de puissance instantanées des sources considérées. Conclure.
+    \item Calculer pour chaque couple ($X,Y$) de production de puissance les corrélations $r=\frac{cov}{\sigma_X \, \sigma_Y}$. Conclure.
     
   \end{enumerate}
 \end{enumerate}
@@ -274,30 +271,14 @@ appuyant sur le programme \tmtextit{foisonnement.py} additionner les sources
 \section{Intermittence}
 
 Dans une première approche de l'intermittence, nous allons évaluer la
-capacité d'une source de production de puissance à la variation à suivre la variation de la consommation. C'est une manière de combiner la prévisibilité de la variabilité et la fractionnabilité.
+capacité d'une source de production de puissance à la variation à suivre la variation de la consommation. C'est une manière de combiner la prévisibilité, la variabilité et la fractionnabilité.
 
-Pour cela en vous appuyant sur les programmes précédents, vous allez calculer la corrélation entre les variations de la consommation, déterminée par le signe de $\left( \frac{C (t) - C (t + \tau)}{\langle C \rangle} \right)$ et la variation de la source qui peut être d'origine nucléaire, éolien et solaire.
+Pour cela en vous appuyant sur les programmes précédents, vous allez calculer la corrélation entre les variations de la consommation, et la variation de la source qui peut être d'origine nucléaire, éolien et solaire, ou une combinaison des de plusieurs sources.
 
 \begin{enumerate}
-	\item Commentez les valeurs obtenues, en faisant varier $\tau$.
-	
+	\item Commentez les corrélations observées pour chaque source de puissance prise séparément.
 	\item Estimez les gains dans le cas du foisonnement et dans le cas de l'agrégation.
-	
 \end{enumerate}
-
-%
-%
-%Pour cela en vous appuyant sur le programme \tmtextit{correlation\_simple.py},
-%vous allez calculer la probabilité que le signe de la variation de la
-%consommation, déterminée par le signe de $\left( \frac{C (t) - C (t +
-%\tau)}{\langle C \rangle} \right)$ et celui des sources respectivement
-%nucléaire, éolien et solaire soient les mêmes.
-%\begin{enumerate}
-%	\item Commentez les valeurs obtenues, en faisant varier $\tau$.
-%	
-%	\item Estimez les gains avec dans le cas du foisonnement et dans le cas de l'agrégation.
-%	
-%\end{enumerate}
 
 
 
@@ -321,16 +302,16 @@ L'objet de cette partie est d'évaluer et de dimensionner les solutions à mettr
 
 \section{Stockage}
 Nous allons dans cette partie normaliser la quantité d'énergie produite sur une année par la quantité d'énergie consommée dans cette même année pour ne plus dépendre de la taille du parc de production de puissance. \\
-Quantifier $C_0$ la totalité de l'énergie consommée dans l'année choisie. Puis  représenter la somme cumulée et normalisée de la consommation de puissance sur cette année:
+Pour commencer, quantifier $C_0$ la totalité de l'énergie consommée dans l'année choisie. Puis  représenter la somme cumulée et normalisée de la consommation de puissance $C$ sur cette année:
 \begin{equation}
-	C^*(T)  = \frac{1}{C_0} ~ \int_{0}^{T}P_C(t) \; \text{d} t	
+	C^*(T)  = \frac{1}{C_0} ~ \int_{0}^{T}C(t) \; \text{d} t	
 \end{equation}
 Cette expression représente l'énergie produite entre $t=0$ et $t=T$. Par construction vous devez vérifier que $C^*(0)=0$ et $C^*(T=1)=1$ avec $T=1$ correspondant à un an. 
 
 
-Les questions suivantes sont à discuter pour les sources PV et éolien.
+Les questions suivantes sont à discuter pour les sources PV et éolien uniquement.
 \begin{enumerate}
-	\item Procéder de la même manière que pour la consommation et quantifier la totalité de l'énergie produite dans l'année choisie $E_0$. Représenter la somme cumulée et normalisée de la consommation sur cette année: 
+	\item Pour le PV et l'éolien, procéder de la même manière que pour la consommation et quantifier la totalité de l'énergie produite  $E_0$ dans l'année choisie. Représenter la somme cumulée et normalisée de la consommation sur cette année: 
 	\begin{equation}
 		E^*(t)  = \frac{1}{E_0} ~ \int_{0}^{T} P(t) \; \text{d} t	
 	\end{equation}
@@ -338,9 +319,9 @@ Les questions suivantes sont à discuter pour les sources PV et éolien.
 	
 	\item Tracer la série temporelle de la différence des puissances normalisées $\delta(t) = \frac{P(t)}{E_0} - \frac{C(t)}{C_0}$. Vérifier que $\int_0^{1\,y} \delta(t) ~ \text{d} t $ sur un an est bien nul.
 	
-	\item Vous vous êtes ainsi assuré de produire exactement sur l'année la quantité d'énergie nécessaire à la consommation, sans sur-production, sans sous-production. Cependant la synchronisation de la consommation et de la production ne sont pas assurées. Pour cela il faut que $E^*$ et $C^*$ soient égaux à chaque pas de temps.\\ Est ce le cas ? 
+	\item Vous vous êtes ainsi assuré de produire exactement sur l'année la quantité d'énergie nécessaire à la consommation, sans sur-production, sans sous-production. Cependant la synchronisation de la consommation et de la production ne sont pas garanties. Pour cela il faut que $E^*$ et $C^*$ soient égaux à chaque pas de temps.\\ Est ce le cas ? 
 	
-	\item Tracer la série temporelle de la différence des sommes cumulées $\Delta(T) = E^*(T) - C^*(T)$. $\Delta $ représente une estimation du stockage nécessaire à chaque pas de temps ?
+	\item Tracer la série temporelle de la différence des sommes cumulées $\Delta(T) = E^*(T) - C^*(T)$. Justifier que $\Delta $ représente une estimation du stockage nécessaire à chaque pas de temps.
 	
 	\item En déduire une évaluation du volume de stockage $S$ nécessaire en fraction de la consommation annuelle $C_0$.
 	
@@ -354,7 +335,7 @@ Vous allez à présent estimer la quantité d'énergie et le volume correspondan
 
 \begin{enumerate}
 	\item Convertir le volume de stockage normalisé trouvé dans la section précédente en une unité d'énergie.
-	\item La solution du dihydrogène est souvent mis en avant pour les grands volumes de stockahe, expliquer pourquoi.
+	\item La solution du dihydrogène est souvent mis en avant pour les grands volumes de stockage, expliquer pourquoi.
 	\item Convertir $S$ en volume et en masse d'hydrogène.
 \end{enumerate}
 

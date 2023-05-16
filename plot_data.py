@@ -16,6 +16,11 @@ data = np.loadtxt(trait_dir + filename + '.data')
 dt = [24*30,24*2*30]
 
 # quelle source représenter
+# 0 :: consommation
+# 1 :: 'Nucleaire'
+# 2 :: 'Eolien'
+# 3 :: 'Solaire'
+# 4 :: 'Hydraulique'
 source = 1
 
 if len(dt) == 1:
