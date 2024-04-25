@@ -3,5 +3,6 @@ TRAITEMENTS
 *.log
 *.out
 *.gz
+*.synctex.gz
 fontconfig
 old/

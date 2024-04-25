@@ -13,3 +13,9 @@ def covariance(x,y):
 def correlation( a, v):
     cor = np.correlate( a, v, "same")
     return cor
+    
+    
+def derivee(hours, a):
+    dt = 2
+    d = (a[ dt:: ] - a[ :-dt: ]) / dt / (hours[1]-hours[0])
+    return d

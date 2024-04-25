@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-trait_dir = "./TRAITEMENTS/" # repertoire traitement
+trait_dir = "./DATA/" # repertoire traitement
 
 # premiere série de données à utiliser
 

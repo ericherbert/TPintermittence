@@ -95,7 +95,7 @@ la production de puissance, et notamment dans la comparaison entre les
 fossile) dans leur capacité à répondre à une demande de puissance
 électrique, cette définition n'est pas suffisante. En effet, par exemple,
 une variation parfaitement prévisible est que le PV ne produira jamais de
-puissance la nuit, et ne pourra donc jamais satisfaire une demande non nulle, quelle que
+puissance la nuit, et ne pourra donc jamais satisfaire une demande non nulle, quel que
 soit la taille du parc installé. Ainsi, il est nécessaire de tenir compte
 des caractéristiques intrinsèques de la production et de la consommation et
 de leur couplage, et d'identifier les notions suivantes:
@@ -165,12 +165,12 @@ Pour la réalisation du TP, nous allons exploiter les données issues de RTE qui
   la colonne de chaque mesurable (Consommation, nucléaire etc). 
 \end{enumerate}
 
-Vous réaliser ce TP vous pouvez utiliser les données disponibles dans le répertoire \tmtextit{DATA}.
+Pour réaliser ce TP vous pouvez utiliser les données disponibles dans le répertoire \tmtextit{DATA}.
 
 
 
 \subsection{Séries temporelles. Consommation et 3 Sources} \label{serie_temporelle}
-Dans la suite on s'interessera uniquement aux sources de production
+Dans la suite on s’intéressera uniquement aux sources de production
 nucléaire, éolien et PV. L'expression \tmtextit{les 3 sources} s'y
 réfère.
 
@@ -179,20 +179,27 @@ réfère.
 	dynamique temporelle de la \tmtextbf{consommation} $i-$journalière, $ii-$mensuelle
 	et $iii-$annuelle. Ajoutez les unités et enregistrez ces figures de manière à
 	pouvoir les retrouver simplement, et faites de même pour les trois sources de puissance.
-	
-	\begin{enumerate}
+	\begin{itemize}
 		\item Sur les diagrammes annuels, repérez les différentes saisons
 		
 		\item Sur les diagrammes journaliers, repérez les différentes parties de
 		la journée
-		
-		\item les éventuelles variations régionales de production de puissance
-	\end{enumerate}
+	\end{itemize}
 	\item Extraire et présenter de manière synthétique les moyennes temporelles $\langle x \rangle$ et écart type $\sigma_x$ de chacune des sources sur chacune des periodes considérées. \newline
 	Quelles sont les limitations de l'emploi des quantités $\sigma_x $, $ \langle
 	x \rangle$ et de la variation relative $\sigma_x / \langle
 	x \rangle$, pour caractériser chacune des sources ?
+    \item Pour dépasser ces limitations, nous allons nous appuyer sur trois outils mathématiques simples. 
+    \begin{itemize}
+        \item La dérivée discrète, pour discuter la vitesse de variation.
+        \item La covariance, calculée pour les vecteurs $x$ et $y$ par $cov(x,y)=(x-\left\langle x \right\rangle)\,(y-\left\langle y \right\rangle)$ avec $\left\langle \cdot \right\rangle$ la moyenne temporelle. 
+        \item La corrélation, calculée pour les vecteurs $x$ et $y$ par $r=\frac{cov(x,y)}{\sigma_x \, \sigma_y}$, avec $\sigma$ l'écart type.
+    \end{itemize}
+    Vous trouverez dans le fichier \textit{outils.py} des fonctions correspondants aux calculs de la dérivée, de la corrélation et de la covariance. Expliquer l'usage et illustrer avec des exemples.
+    
 \end{enumerate}
+
+
 
 \vspace{1cm}
 \hrule
@@ -222,7 +229,7 @@ Dans un premier temps, afficher les distributions des séries temporelles.
   fluctuations aléatoire, les écarts de la pdf de la production électrique à cette loi pour les 3 sources et la consommation.
 \end{enumerate}
 
-Dans un deuxième temps, représenter les autocorrélations de la consommation $\frac{\text{cov}(C(t),C(t+\tau)) }{\sigma^2_x}$ et des 3 sources.\footnote{On rappelle que le coefficient de corrélation s'écrit $r=\frac{cov}{\sigma_X \, \sigma_Y}$ avec $X$ et $Y$ et $cov$ la covariance. Des codes sont proposés dans \textit{outils.py}} Discuter les figures obtenues.
+Dans un deuxième temps, représenter les autocorrélations de la consommation  et des 3 sources. Discuter les figures obtenues.
 
 \section{Agrégation}
 
@@ -237,7 +244,6 @@ Pour une source de puissance particulière, l'agrégation consiste à étendre l
   \begin{enumerate}
     \item L'agrégation permet elle de
     diminuer les periodes sans puissance produite ?
-    \item Comparer les distributions obtenues avec une loi normale
     \item Calculer la corrélation des productions de puissance instantanées des deux régions considérées. Conclure.
   \end{enumerate}
 \end{enumerate}
@@ -260,9 +266,7 @@ appuyant sur le programme \tmtextit{foisonnement.py} additionner les sources
     \item Les séries temporelles obtenues. L'agrégation permet elle de
     diminuer les periodes sans puissance produite ? La perte de puissance
     nocturne est elle atténuée ?
-    
-    \item Comparer les distributions obtenues avec une loi normale
-    
+        
     \item Calculer pour chaque couple ($X,Y$) de production de puissance les corrélations $r=\frac{cov}{\sigma_X \, \sigma_Y}$. Conclure.
     
   \end{enumerate}

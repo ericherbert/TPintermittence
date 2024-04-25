@@ -2,9 +2,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-trait_dir = "./TRAITEMENTS/" # repertoire de traitement
+trait_dir = "./DATA/" # repertoire de traitement
 filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018"
 
+def covariance(x,y):
+    # covariance sans décalage temporel
+    mean_x = np.mean(x)
+    mean_y = np.mean(y)
+    cov = np.mean( (x-mean_x) * (y-mean_y) )
+    return cov
+    
+    
+def correlation( a, v):
+    cor = np.correlate( a, v, "same")
+    return cor
+    
+    
+def derivee(hours, a):
+    dt = 2
+    d = (a[ dt:: ] - a[ :-dt: ]) / dt / (hours[1]-hours[0])
+    return d
 
 hours = np.loadtxt(trait_dir + filename + '.hours')
 data = np.loadtxt(trait_dir + filename + '.data')
@@ -13,12 +30,11 @@ periode = hours
 # Quelle source utiliser ?
 source = 3
 queldata = data[ source,:]
-# Quel décalage temporel utiliser ?
-# attention à vérifer l'incrément de temps sur le fichier horaire !
-dt = 2
-queldata = (queldata[ dt:: ] - queldata[ :-dt: ]) / np.mean(queldata)
+queldata = queldata 
+queldata = derivee(hours,queldata) 
+
 # ajouter une gaussienne de même moyenne et écart type que la distribution ?
-plot_gaussienne = False
+plot_gaussienne = True
 mean = np.mean( queldata) # moyenne de la gaussienne
 std = np.std( queldata) # écart type de la gaussienne
 
@@ -31,7 +47,7 @@ plt.figure(figname)
 # bins = seuillage
 # log = axes logarithmiques
 # density = normalisation pdf telle que int (distribution) = 1
-plt.hist( queldata  , bins=100, log=1, density=0 )
+plt.hist( queldata  , bins=100, log=1, density=1 )
 plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
 

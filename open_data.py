@@ -8,15 +8,15 @@ import os
 
 # ---- PARAMS ---- 
 data_dir = "./DATA/" # repertoire des donnees
-trait_dir = "./TRAITEMENTS/" # repertoire des sorties
+trait_dir =  data_dir # repertoire des sorties
 
 #filename = "eCO2mix_RTE_Annuel-Definitif_2018.csv"
 #filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018.csv"
-filename = "eCO2mix_RTE_Annuel-Definitif_2020.csv"
-#filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018.csv"
+#filename = "eCO2mix_RTE_Annuel-Definitif_2020.csv"
+filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018.csv"
 
 hours_delimiter = ':'
-date_delimiter = '/'
+date_delimiter = '-'
 
 
 

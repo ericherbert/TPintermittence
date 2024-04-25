@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-trait_dir = "./TRAITEMENTS/" # repertoire
+trait_dir = "./DATA/" # repertoire
 filename = "eCO2mix_RTE_Occitanie_Annuel-Definitif_2018"
 
 
