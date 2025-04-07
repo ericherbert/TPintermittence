@@ -59,18 +59,6 @@ def relative_variation( queldata):
     print('')
     return queldata
 
-def correlation( a, v):
-
-    figname = " agregation_correlation "
-    plt.close(figname)
-    plt.figure(figname)
-    plt.plot( np.correlate( a, v, "same")  )
-
-    plt.xlabel('Abs [unités ?]')
-    plt.ylabel('Ord [unités ?]')
-
-
-
 
 # exemple de figures obtenue avec les données
 figname = " agregation_serie-temporelle "
@@ -93,10 +81,10 @@ plt.hist( relative_variation(  source_1 + source_2 ), bins=100, log=1, density=1
 plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
 
-
-#correlation( source_1, source_2)
-
-
+plt.figure("Correlation") 
+plt.plot( np.correlate( source_1, source_1, "same")  )
+plt.xlabel('Abs [unités ?]')
+plt.ylabel('Ord [unités ?]')
 
 plt.show(block=False)
 
