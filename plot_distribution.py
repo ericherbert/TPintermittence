@@ -9,26 +9,6 @@ save_plot = "./plots/"
 # data utilisées
 filename = "eCO2mix_RTE_Hauts-de-France_Annuel-Definitif_2018"
 
-def covariance(x,y):
-    # covariance sans décalage temporel
-    mean_x = np.mean(x)
-    mean_y = np.mean(y)
-    cov = np.mean( (x-mean_x) * (y-mean_y) )
-    return cov
-    
-    
-def correlation( a, v):
-    # pour faire le calcule de l'autocorrelation 
-    # du vecteur a: autocor = np.correlation( a, a, "same")
-    cor = np.correlate( a, v, "full")
-    return cor
-    
-    
-def derivee(hours, a):
-    dt = 2
-    d = (a[ dt:: ] - a[ :-dt: ]) / dt / (hours[1]-hours[0])
-    return d
-
 hours = np.loadtxt(trait_dir + filename + '.hours')
 data = np.loadtxt(trait_dir + filename + '.data')
 
@@ -38,12 +18,10 @@ data = np.loadtxt(trait_dir + filename + '.data')
 # 2 :: 'Eolien'
 # 3 :: 'Solaire'
 # 4 :: 'Hydraulique'
-source = 2
+source = 0
 # histogramme
 queldata = data[ source,:]
 # calcul autocorrelation
-queldata = correlation( queldata, queldata) 
-queldata = queldata[queldata.size // 2:]
 
 mean = np.mean( queldata) # moyenne de la gaussienne
 std = np.std( queldata) # écart type de la gaussienne
@@ -58,14 +36,19 @@ plt.figure(figname)
 # log = axes logarithmiques
 # density = normalisation pdf telle que int (distribution) = 1
 #plt.hist( queldata , log=1, density=1 )
-plt.plot( queldata  )
+plt.hist( queldata  , log=1, density=1 )
+
+# Tracé de la gaussienne
+x = np.linspace(mean - 4*std, mean + 4*std, 1000)
+y = (1 / (std * np.sqrt(2 * np.pi))) * np.exp(-0.5 * ((x - mean) / std) ** 2)
+plt.plot(x, y, 'r', linewidth=1.5, label=f'Gaussienne\nmoyenne={round(mean,1)}\nécart type={round(std,1)}')
 plt.xlabel('Abs [unités ?]')
 plt.ylabel('Ord [unités ?]')
-
+plt.legend()
 # pour enregistrer la figure:
-plt.savefig(save_plot + filename + '_' + figname)
+#plt.savefig(save_plot + filename + '_' + figname)
 
-#plt.show(block=False)
+plt.show(block=False)
 
 print('')
 print(' fichier utilisé: ' + filename)
