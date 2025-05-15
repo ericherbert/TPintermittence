@@ -1,4 +1,4 @@
-\documentclass[12pt,a4,french]{article}
+\documentclass[12pt,french]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{epsfig}
@@ -14,8 +14,21 @@
 \usepackage[table]{xcolor}
 \pagestyle{fancyplain}
 \usepackage{hyperref}
+\usepackage{a4wide}
+\usepackage{listings}
+\lstset{
+	basicstyle=\ttfamily,
+	columns=fullflexible,
+	frame=single,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+}
+
+\usepackage{easyReview}
 
 \setmargins{2.5cm}{2cm}{16cm}{23.5cm}{0cm}{0cm}{1cm}{1cm}
+
+
 
 \baselineskip 20mm
 \headheight=0mm
@@ -25,9 +38,8 @@
 \newcommand{\re}{\color{red}}
 
 \newcommand{\be}{\begin{equation}}
-	\newcommand{\ee}{\end{equation}}
+\newcommand{\ee}{\end{equation}}
 \newcommand{\ba}{\begin{eqnarray}}
-	
 	\newcommand{\ea}{\end{eqnarray}}
 \newcommand{\dal}{\raisebox{0.085cm}}
 \newcommand{\dslash}{{\not\!\sectionial}}
@@ -58,7 +70,7 @@
 \begin{center}
     \begin{tabular}{c}
         {\Large  \textsc{Énoncé de TP}}\\
-        {\Large{Intermittence}}\\
+        {\Large{Intermittence de la production et de la consommation de puissance}}\\
         \\
         %\hline
     \end{tabular}
@@ -76,7 +88,12 @@
     \hrule
 \end{center}
 
-
+\alert{pour 'lannée prochaine: \\
+-- modifier fichiers horodatage en heure directement (pas de demie heure) \\
+-- sur jupyterhub de l'ufr le calcul des correlations est trop long. voir sir la réduction au dessus suffit ou s'il faut réduire plus\\
+-- vérifier que les correlations sont normalisées correctement. J'ai l'impression qu'il y a un problème dans les fichiers de données \\
+-- refaire tout le TP pour vérifier que les changements sont ok}
+\vspace{1cm}
 
 Le compte rendu de ce TP devra être rendu sous forme numérique, en \textbf{pdf},
 édité à l'aide d'un outil tel que \textit{Latex}, \textit{Texmacs} ou \textit{LibreOffice}. Les figures seront
@@ -89,7 +106,7 @@ Vous allez générer dans ce TP un grand nombre de figures. N'oubliez pas de tou
 \section{Avant la séance}
 \label{sec:avant}
 L'intermittence est une notion très précise en physique, qui signifie que
-l'on observe pour une variable aléatoire des fluctuations de grande amplitude dont la fréquence s'écarte de celle attendue pour une loi normale. Par exemple la distribution des incréments de vitesse dans un écoulement turbulent\footnote{On trouvera une abondante littérature sur le sujet à l'aide d'un moteur de recherche. Ce matériau pourra servir à l'introduction de votre rapport} ne suit pas exactement la loi normale.
+l'on observe pour une variable aléatoire des fluctuations de grande amplitude dont la fréquence s'écarte de celle attendue pour une loi normale. Par exemple la distribution des incréments de vitesse dans un écoulement turbulent\footnote{On trouvera une abondante littérature sur le sujet à l'aide d'un moteur de recherche. Ce matériau pourra servir à l'introduction de votre rapport}  ne suit pas exactement la loi normale.
 Cependant dans le débat lié à
 la production de puissance, et notamment dans la comparaison entre les
 énergie de flux (éolien, photovoltaïque, appelé PV dans la suite) et les énergies de stock (nucléaire,
@@ -173,13 +190,23 @@ Ce TP est prévu pour être effectué sur python. Vous pouvez utiliser le \tmtex
 
 \section{Traitement}
 
-Dans la suite on s'interessera uniquement aux sources de production
-nucléaire, éolien et PV. L'expression \tmtextit{les 3 sources} s'y
-réfère.
+
+\subsection{Intermittence}
+
+Dans une première approche de l'intermittence, nous allons évaluer la capacité des sources de production de puissance à suivre la variation de la consommation.  Pour cela nous allons utiliser la notion de corrélation. Pour fixer les idées rapidement, nous allons construire un signal sinusoidal et calculer son autocorrélation: 
+\begin{lstlisting}
+	import numpy as np
+	sin = np.sin(2*np.pi*np.arange(0,5,0.1))
+	print(np.correlate(sin,sin))
+	autocor = np.correlate( sin, sin, 'same' ) / np.std(sin) / np.std(sin) / len(sin)
+\end{lstlisting}
+Faites le plot de \texttt{autocor}. Commenter le plot obtenu, la valeur numérique affichée, que nous appelons le coefficient de corrélation $r$. Si besoin, appuyez vous sur l'aide de la fonction \texttt{np.autocor} et de la page \href{https://fr.wikipedia.org/wiki/Corr\%C3\%A9lation_(statistiques)}{Wikipedia} correspondante.
+
+Dans la suite on s'interessera uniquement aux sources de production nucléaire, éolien et PV. L'expression \tmtextit{les 3 sources} s'y réfère.
 
 
 \subsection{Représentations brutes}
-Après avoir choisi un fichier de données disponible dans \textit{DATA}.
+Après avoir choisi un fichier disponible dans \textit{DATA}. Les fichiers sont régionalisés, sont disponibles l'Occitanie, les Hauts de France et toute la France.
 \paragraph{Séries temporelles}
 \begin{enumerate}
   \item À l'aide du programme \tmtextit{plot\_data.py}, représenter les séries temporelles de la \tmtextbf{consommation} journalière et saisonnière (par exemple 3 mois). Ajouter les unités et enregistrer ces figures de manière à pouvoir les retrouver simplement, et faites de même pour les \textbf{trois sources}. Vous pourrez commenter les points suivants:
@@ -188,10 +215,9 @@ Après avoir choisi un fichier de données disponible dans \textit{DATA}.
     
     \item Sur les diagrammes journaliers, repérer les différentes sections de la journée
     
-    \item les éventuelles variations régionales de production de puissance
   \end{enumerate}
   \item Extraire les moyennes temporelles $\langle x \rangle$ et écart type
-  $\sigma_x$ de chacune des sources sur chacune des periodes considérées.
+  $\sigma_x$ de chacune des sources sur une une semaine que vous aurez choisie.
   Quelles sont les limitations de l'emploi des quantités $\sigma_x $, $ \langle
   x \rangle$ et de la variation relative $\sigma_x / \langle
   x \rangle$, pour les caractériser ?
@@ -199,18 +225,25 @@ Après avoir choisi un fichier de données disponible dans \textit{DATA}.
 
 \paragraph{Distributions} À l'aide du programme \tmtextit{plot\_distribution.py}, représenter la distribution de la \tmtextbf{consommation} et des \textit{3 sources}. Représenter les \tmtextit{densités de probabilité} \footnote{appelée pdf pour Probability Density Function, définie telle que $\int pdf = 1$} de ces fonctions en vous appuyant sur le paramètre \tmtextit{density} de la fonction histogramme. 
 
-\paragraph{Autocorrélations} À l'aide du programme \tmtextit{plot\_correlation.py}, représenter l'autocorrélation\footnote{Voir la page \href{https://fr.wikipedia.org/wiki/Corr%C3%A9lation_(statistiques)}{Wikipedia} corresponante} de la \tmtextbf{consommation} et des \textit{3 sources}. 
-Ajouter les unités, noms des axes et enregistrer les figures. \\
+\paragraph{Autocorrélations}  À l'aide du programme \tmtextit{plot\_correlation.py}, représenter l'autocorrélation de la \tmtextbf{consommation} et des \textit{3 sources}. 
+Ajouter les unités, noms des axes et enregistrer les figures. Pouvez vous identifier des motifs periodiques ?
+
+\paragraph{Corrélations}  Calculer les coefficients de corrélation entre la consommation et \texttt{C} et chacune des trois sources \texttt{S} à l'aide de 
+\begin{lstlisting}
+	autocor = np.correlate(  C,  S ) / np.std(C) / np.std(S) / len(C)
+\end{lstlisting}
+conclure sur les capacités respectives de chacune des sources à satisfaire la demande.
+
+Une manière d'améliorer cette capacité est de varier les sources, à la fois géographiquement (agrégation) et techniqument (foisonnement). C'est ce que nous allons voir dans la suite.
+
 
 \subsection{Agrégation}
 
 Pour une source de puissance particulière, l'agrégation consiste à étendre la production spatialement pour profiter de conditions climatiques le plus décorrélées possible (cas aléatoire) ou anticorrélées (cas déterministe)
 \begin{enumerate}
-	\item Expliquer pourquoi des conditions climatiques décorrélées ou anticorrélées sont avantageuses.
+	\item Expliquer pourquoi des conditions climatiques décorrélées ou anticorrélées pourraient être avantageuses.
 	
-  \item À partir du programme \tmtextit{agregation.py} qui utilise des
-  données issues de \tmtextit{RTE} décrivant la production électrique
-  issues de deux régions, représenter puis additionner les sources
+  \item À partir du programme \tmtextit{agregation.py} qui utilise des  données issues de \tmtextit{RTE} décrivant la production électrique   issues de deux régions, représenter puis additionner les sources
   électriques PV \textbf{ou} éolien.
   
   \item Discuter :
@@ -219,7 +252,7 @@ Pour une source de puissance particulière, l'agrégation consiste à étendre l
         
     \item Calculer le coefficient de corrélation $r=\frac{cov}{\sigma_X \, \sigma_Y}$ avec $X$ et $Y$ les productions de puissance instantanées des deux régions considérées et la covariance $cov=\langle (X-\langle X \rangle)(Y-\langle Y \rangle) \rangle$.
     
-    \item Conclure
+    \item Conclure sur l'agrégation 
     
   \end{enumerate}
 \end{enumerate}
@@ -245,15 +278,11 @@ appuyant sur le programme \tmtextit{foisonnement.py} additionner les sources
      
     \item Calculer le coefficient de corrélation $r=\frac{cov}{\sigma_X \, \sigma_Y}$ avec $X$ et $Y$ les productions de puissance instantanées des sources considérées. 
     
-    \item Conclure.
+    \item Conclure le foisonnement
   \end{enumerate}
 \end{enumerate}
 
-\subsection{Intermittence}
-
-Dans une première approche de l'intermittence, nous allons évaluer la
-capacité d'une source de production de puissance à la variation à suivre la variation de la consommation. C'est une manière de combiner la prévisibilité de la variabilité et la fractionnabilité. \\
-Pour cela en vous appuyant sur les calculs précédents, calculer la corrélation de la consommation avec chacune des 3 sources d'énergie et conclure.
+Une autre manière de pouvoir satisfaire la demande est de disposer d'un stockage. C'est ce que nous allons voir dans la suite.
 
 %
 %
@@ -291,32 +320,41 @@ L'objet de cette section est d'évaluer et de dimensionner les solutions à mett
 
 \subsection{Stockage}
 Nous allons dans cette section normaliser la quantité d'énergie produite sur une année par la quantité d'énergie consommée dans cette même année pour ne plus dépendre de la taille du parc de production de puissance. \\
-Quantifier $C_0$ la totalité de l'énergie consommée dans l'année choisie. Puis  représenter la somme cumulée et normalisée de la consommation de puissance sur cette année:
-\begin{equation}
-	C^*(T)  = \frac{1}{C_0} ~ \int_{0}^{T}P_C(t) \; \text{d} t	
-\end{equation}
-Cette expression représente l'énergie produite entre $t=0$ et $t=T$. Par construction vous devez vérifier que $C^*(0)=0$ et $C^*(T=1)=1$ avec $T=1$ correspondant à un an. 
-
-
 Les questions suivantes sont à discuter pour les sources PV et éolien.
 \begin{enumerate}
-	\item Procéder de la même manière que pour la consommation et quantifier la totalité de l'énergie produite dans l'année choisie $E_0$. Représenter la somme cumulée et normalisée de la consommation sur cette année: 
-	\begin{equation}
-		E^*(t)  = \frac{1}{E_0} ~ \int_{0}^{T} P(t) \; \text{d} t	
-	\end{equation}
-	Verifier que $E^*(0)=0$ et $E^*(T=1)=1$ avec $T=1$ correspondant à un an. 
+	\item Quantifier $E_0^C$ la totalité de l'énergie consommée dans l'année choisie. 
 	
-	\item Tracer la série temporelle de la différence des puissances normalisées $\delta(t) = \frac{P(t)}{E_0} - \frac{C(t)}{C_0}$. Vérifier que $\int_0^{1\,y} \delta(t) ~ \text{d} t $ sur un an est bien nul.
+	\item Porcédez de même pour quantifier les énergies $E_0^{PV}$ et $E_0^{W}$ produites sur l'année en France.
 	
-	\item Vous vous êtes ainsi assuré de produire exactement sur l'année la quantité d'énergie nécessaire à la consommation, sans sur-production, sans sous-production. Cependant la synchronisation de la consommation et de la production ne sont pas assurées. Pour cela il faut que $E^*$ et $C^*$ soient égaux à chaque pas de temps.\\ Est ce le cas ? 
+	\item Tracer la série temporelle de la différence des puissances normalisées pour le PV et l'éolien $\delta^{PV} (t) = \frac{P(t)}{E_0^{W}} - \frac{C(t)}{E_0^C}$ et l'éolien $\delta^{W}(t) = \frac{P(t)}{E_0^{W}} - \frac{C(t)}{E_0^C}$. 
 	
-	\item Tracer la série temporelle de la différence des sommes cumulées $\Delta(T) = E^*(T) - C^*(T)$. $\Delta $ représente une estimation du stockage nécessaire à chaque pas de temps ?
+	\item Vérifier que dans les deux cas $\sum_0^{1\,y} \delta(t) ~ \text{d} t $ sur un an est bien nul. \\
+	Vous vous êtes ainsi assuré de produire exactement sur l'année la quantité d'énergie nécessaire à la consommation, sans sur-production ni sous-production. Cependant la synchronisation de la consommation et de la production ne sont pas assurées. Pour cela il faut que consommation et production soient égaux à chaque pas de temps.\\ 
+	En vous appuyant sur les $\delta$, concluez si c'est bien le cas.
 	
-	\item En déduire une évaluation du volume de stockage $S$ nécessaire en fraction de la consommation annuelle $C_0$.
+	\item Nous allons à présent caculer la taille du stockage nécessaire. \\
+	Tracer la série temporelle de la différence des sommes cumulées $\Delta(t) = \sum \delta (t)$. $\Delta $ représente une estimation du stockage nécessaire à chaque pas de temps, en unité de $E_0^C$.  totalité de la production  Son maximum est le stockage nécessaire. Si $\Delta_{MAX})=0.5$ alors il faut pouvoir stocker la moitité de la consommation annuelle.
+	
+	\item En déduire une évaluation du volume de stockage $S$ nécessaire en fraction de la consommation annuelle $E_0^C$.
 	
 	\item Question subsidiaire: comment $S$ dépend de la période choisie ?
 	
 \end{enumerate}
+
+
+
+%Puis  représenter la somme cumulée et normalisée de la consommation de puissance sur cette année:
+%\begin{equation}
+%	C^*(T)  = \frac{1}{C_0} ~ \int_{0}^{T}P_C(t) \; \text{d} t	
+%\end{equation}
+%Cette expression représente l'énergie produite entre $t=0$ et $t=T$. Par construction vous devez vérifier que $C^*(0)=0$ et $C^*(T=1)=1$ avec $T=1$ correspondant à un an. 
+%
+%Procéder de la même manière que pour la consommation et quantifier la totalité de l'énergie produite dans l'année choisie $E_0$. Représenter la somme cumulée et normalisée de la consommation sur cette année: 
+%\begin{equation}
+%	E^*(t)  = \frac{1}{E_0} ~ \int_{0}^{T} P(t) \; \text{d} t	
+%\end{equation}
+%Verifier que $E^*(0)=0$ et $E^*(T=1)=1$ avec $T=1$ correspondant à un an. 
+
 
 \subsection{Conversion en énergie}
 
